@@ -722,7 +722,7 @@
 
 <!-- ════════════════════════ TOC ════════════════════════ -->
 <nav class="toc">
-  <a class="toc-item" href="#s1"><span class="toc-num">1</span><span class="toc-label">LLM의 본질 — 입력과 출력, 그게 전부다</span></a>
+  <a class="toc-item" href="#s1"><span class="toc-num">1</span><span class="toc-label">LLM의 본질 — 입력과 출력이 전부(근데 너무 똑똑한)</span></a>
   <a class="toc-item" href="#s2"><span class="toc-num">2</span><span class="toc-label">구조화된 출력 — Tool(도구)의 탄생</span></a>
   <a class="toc-item" href="#s3"><span class="toc-num">3</span><span class="toc-label">MCP의 등장 — Tool의 표준화</span></a>
   <a class="toc-item" href="#s4"><span class="toc-num">4</span><span class="toc-label">컴퓨터 명령어 실행 Tool — LLM이 날개를 달다</span></a>
@@ -737,11 +737,11 @@
   <!-- ────── 1. LLM의 본질 ────── -->
   <article class="section" id="s1">
     <div class="section-number">1</div>
-    <h2>LLM의 본질 <span class="dim">— 입력과 출력, 그게 전부다</span></h2>
+    <h2>LLM의 본질 <span class="dim">— 입력과 출력이 전부(근데 너무 똑똑한)</span></h2>
 
     <p>
       <code>claude-opus-4-6</code>, <code>gpt-4o</code>, <code>gemini</code> — 이름이 뭐든 간에,
-      이들 LLM(Large Language Model)의 <strong>본질은 단 하나</strong>입니다.
+      이들 <span class="highlight">LLM(Large Language Model)</span>의 <strong>본질은 단 하나</strong>입니다.
     </p>
 
     <!-- Diagram: basic LLM -->
@@ -757,10 +757,10 @@
     </div>
 
     <p>
-      처음엔 정말 이게 전부였습니다. 텍스트를 받아서, 텍스트를 뱉는 것.
+      정말 이게 전부입니다. 텍스트를 입력 받아서, 텍스트를 출력하는 것.
     </p>
     <p>
-      지금은 여기서 더 발전했습니다.
+      물론 여기서 더 발전하긴 했습니다.
       이미지를 보고 이해하고, 음성을 듣고, 이미지를 직접 생성하기도 합니다.
       이른바 <span class="highlight">멀티모달(Multimodal)</span> — 텍스트뿐 아니라 다양한 형태의 데이터를 다루게 된 것이죠.
     </p>
@@ -789,13 +789,13 @@
     <p>
       하지만 본질은 달라지지 않았습니다.
       입력의 종류가 다양해지고, 출력의 종류가 다양해졌을 뿐 —
-      <strong>여전히 "받아서 뱉는" 구조</strong>입니다.
+      <strong>여전히 "입력 → LLM → 출력" 구조</strong>입니다.
     </p>
 
     <p>
-      죽었다 깨어나도 <span class="highlight">웹 검색을 못 합니다.</span>
+      죽었다 깨어나도 <strong>웹 검색을 못 합니다.
       코드를 실행할 수 없습니다. 파일 하나 읽을 수 없습니다.
-      이메일도 못 보내고, API도 못 호출합니다.
+      이메일도 못 보내고, API도 못 호출합니다.</strong>
       아무리 멀티모달이 되어도, LLM은 <strong>입력을 받아 출력을 생성하는 변환기</strong>일 뿐입니다.
     </p>
 
@@ -821,6 +821,18 @@
       "다음 토큰 예측"이라는 단순한 원리에서 이런 능력이 나온다는 것 자체가
       현대 AI의 가장 놀라운 발견 중 하나입니다.
     </p>
+    <div class="callout" style="border-left-color: var(--purple); background: rgba(167,139,250,0.08);">
+      <p>
+        여기서 한 발 더 — 한창 화제였던 <strong>"thinking"(reasoning)</strong>도 본질은 같습니다.
+        답변을 바로 출력하는 대신,
+        <strong>추론 과정을 토큰으로 먼저 출력한 뒤 답변을 출력</strong>하게 한 것입니다.
+        "생각한다"는 것도 결국 출력의 일부인 거죠.
+        그런데 이 단순한 변화가 가져온 결과가 놀랍습니다 —
+        이전에는 0%였던 고난도 추론 문제를 87%까지 풀어내고,
+        박사급 과학 문제에서 인간 전문가를 넘어서기 시작했습니다.
+        <strong>같은 모델이 "더 오래 생각할수록" 더 똑똑해지는</strong>, 새로운 차원의 능력 향상이 열린 겁니다.
+      </p>
+    </div>
     <p>
       "그런데 대화하다 보면 이전 내용을 기억하는 것 같은데요?"
       — 그것도 사실 같은 원리입니다.
@@ -897,7 +909,8 @@
           <div style="color: var(--yellow); font-size: 0.75rem;">📋 [저장된 메모리] 사용자는 백엔드 개발자, Python 선호</div>
           <div style="color: var(--purple); font-size: 0.75rem;">📄 [시스템 프롬프트] 당신은 도움이 되는 어시스턴트입니다...</div>
           <div style="color: var(--blue); font-size: 0.75rem;">💬 [사용자] API 하나 만들어줘</div>
-          <div style="color: var(--text-dim); font-size: 0.7rem; margin-top: 0.25rem;">↑ LLM은 이 전체를 하나의 입력으로 받음</div>
+          <div style="color: var(--text-dim); font-size: 0.7rem; margin-top: 0.25rem;">↑ 사용자 눈에는 본인이 입력한 "API 하나 만들어줘"만 보이지만,<br>
+          &nbsp;&nbsp;사실 <strong>LLM은 이 전체를 하나의 입력으로 받고 있습니다.</strong></div>
         </div>
       </div>
     </div>
@@ -940,9 +953,27 @@
 
     <p>
       이 순간 게임이 바뀌었습니다. LLM이 직접 웹검색을 하는 건 여전히 불가능하지만,
-      <strong>"이 함수를 이 파라미터로 호출해줘"라고 요청</strong>할 수 있게 된 겁니다.
+      <strong>"나한테 web_search라는 Tool이 있으니 이걸 쓰겠다"고 판단하고 출력</strong>할 수 있게 된 겁니다.
       이것이 <span class="highlight">Tool Use</span>, 또는 <span class="highlight">Function Calling</span>의 시작입니다.
     </p>
+
+    <div class="callout">
+      <p>
+        "그런데 자기한테 그런 Tool이 있는 건 어떻게 알죠?"
+        — LLM이 스스로 아는 게 아닙니다. 1장에서 본 메모리와 같은 원리입니다.
+        사용자 눈에는 채팅창에 입력한 메시지만 보이지만,
+        실제로 LLM에게 들어가는 입력은 이렇습니다:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 0.3rem; padding: 0.75rem; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.75rem; margin-top: 0.75rem;">
+        <div style="color: var(--blue);">📄 [시스템 프롬프트] 당신은 도움이 되는 어시스턴트입니다...</div>
+        <div style="color: var(--purple);">🔧 [Tool 목록] web_search — "웹에서 정보를 검색합니다" (파라미터: query, ...)</div>
+        <div style="color: var(--purple);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;save_memory — "기억할 정보를 저장합니다" (파라미터: content, ...)</div>
+        <div style="color: var(--yellow);">📋 [저장된 메모리] 사용자는 백엔드 개발자, Python 선호</div>
+        <div style="color: var(--green);">💬 [사용자] 오늘 서울 날씨 알려줘</div>
+        <div style="color: var(--text-dim); font-size: 0.7rem; margin-top: 0.25rem;">↑ 사용자 눈에는 본인이 입력한 "오늘 서울 날씨 알려줘"만 입력되는 걸로 보이지만,<br>
+        &nbsp;&nbsp;<strong>사실 LLM은 이 전체를 하나의 입력으로 받고 있습니다. Tool 목록을 빼면 Tool이 있었다는 사실조차 모릅니다.</strong></div>
+      </div>
+    </div>
 
     <!-- Diagram: Tool Use flow -->
     <div class="diagram">
@@ -969,7 +1000,7 @@
       핵심을 짚어보면:
     </p>
     <p>
-      <strong>① LLM은 여전히 텍스트만 출력합니다.</strong> 다만 그 텍스트가 "이 Tool을 실행해달라"는 구조화된 요청인 거죠.
+      <strong>① LLM은 여전히 텍스트만 출력합니다.</strong> 다만 그 텍스트가 <code>{"tool": "web_search", ...}</code> 같은 "이 Tool을 실행한다"는 구조화된 답변인 거죠.
     </p>
     <p>
       <strong>② 실제 실행은 외부 시스템이 합니다.</strong> 웹검색을 하는 건 검색 API를 호출하는 코드고, DB에 데이터를 저장하는 건 DB에 접속해서 저장하는 코드입니다.
@@ -1125,7 +1156,7 @@
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
-            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽기)" }
+            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽는 명령어)" }
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">
@@ -1137,7 +1168,7 @@
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
-            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(파일 수정)" }
+            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(파일 수정 명령어)" }
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">
@@ -1145,7 +1176,7 @@
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
-            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(테스트 실행)" }
+            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(테스트 실행 명령어)" }
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">
@@ -1174,14 +1205,14 @@
 
     <p>
       여기서 꼭 짚고 넘어가야 할 게 있습니다.
-      LLM이 <code>{"tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽기)"}</code> 같은 구조화된 출력을 하면,
+      LLM이 <code>{"tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽는 명령어)"}</code> 같은 구조화된 출력을 하면,
       <strong>누군가는 그걸 받아서 진짜로 실행해줘야 합니다.</strong>
     </p>
     <p>
       그 "누군가"는 <span class="highlight">어떤 컴퓨터</span>도 될 수 있습니다.
       Claude Code의 경우, 기본적으로 <strong>여러분의 컴퓨터</strong>가 직접 실행합니다.
-      LLM이 "파일을 읽어달라"고 출력하면 여러분의 컴퓨터가 실제로 파일을 열어서 결과를 LLM에게 돌려주고,
-      "테스트를 실행해달라"고 출력하면 여러분의 컴퓨터에서 진짜로 테스트가 돌아갑니다.
+      LLM이 <code>{"tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽는 명령어)"}</code>를 출력하면 여러분의 컴퓨터가 실제로 파일을 열어서 결과를 LLM에게 돌려주고,
+      <code>{"tool": "컴퓨터 명령어 실행", "명령어": "(테스트 실행 명령어)"}</code>를 출력하면 여러분의 컴퓨터에서 진짜로 테스트가 돌아갑니다.
       하지만 이 실행 환경은 다른 서버 컴퓨터가 될 수도 있고, 클라우드 서비스가 될 수도 있습니다.
     </p>
     <p>
@@ -1218,6 +1249,25 @@
       실제로 필요한 순간에만 해당 Skill의 내용을 로드</strong>합니다.
       컨텍스트를 낭비하지 않으면서도, 필요할 때는 전문적인 지침을 바로 꺼내 쓸 수 있는 구조입니다.
     </p>
+
+    <div class="callout">
+      <p>
+        원리는 2장에서 본 Tool 목록과 같습니다.
+        LLM이 Skill을 "아는" 것도 결국 입력에 넣어주기 때문입니다.
+        우리 눈엔 지금 우리가 입력한 메시지만 보이지만,
+        사실 Skill 목록도 매번 입력에 포함되고 있는 거죠:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 0.3rem; padding: 0.75rem; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.75rem; margin-top: 0.75rem;">
+        <div style="color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em;">시작 시 — 이름과 설명만</div>
+        <div style="color: var(--purple);">📋 [Skill 목록] excel-report — "엑셀 데이터를 분석하고 월간 보고서를 생성합니다"</div>
+        <div style="color: var(--purple);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send-email — "이메일을 작성하고 발송합니다"</div>
+        <div style="color: var(--purple);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</div>
+        <div style="color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em; margin-top: 0.5rem;">LLM이 필요하다고 판단 → Skill Tool 호출(출력) → 시스템이 SKILL.md를 읽어서 입력에 주입</div>
+        <div style="color: var(--accent);">📄 [SKILL.md 전문] 월간 보고서를 생성합니다: 1. 엑셀 파일에서 데이터를 읽어옴 2. ...</div>
+        <div style="color: var(--text-dim); font-size: 0.7rem; margin-top: 0.25rem;">↑ <strong>별도 시스템(Claude Code 프로그램에 사전 작성된 코드)이 정해진 위치에서 Skill을 찾아서 LLM 입력에 넣어줍니다.<br>
+        &nbsp;&nbsp;평소에는 가벼운 목록만, 필요할 때만 전체 내용이 추가됩니다.</strong></div>
+      </div>
+    </div>
 
     <p>
       Skill의 실체는 <strong>폴더</strong>입니다.
@@ -1259,14 +1309,15 @@ excel-report/
 
     <p>
       이 파일 하나로 LLM은 <code>/excel-report</code>라는 새로운 능력을 얻습니다.
-      Skill은 이렇게 <strong>누구나 만들 수 있고, 공유할 수 있고, 꽂으면 바로 작동</strong>합니다.
+      Skill은 이렇게 <strong>누구나 만들 수 있고, 공유할 수 있고,
+      정해진 위치(Claude Code의 경우 <code>.claude/skills/</code> 폴더)에 넣어두기만 하면 바로 작동</strong>합니다.
     </p>
 
     <p>
       여기서 주목할 점은 — 4장에서 배운 <strong>컴퓨터 명령어 실행 Tool과 Skill이 결합</strong>된다는 것입니다.
       Skill 폴더 안에 스크립트(<code>validate.py</code>)가 들어있고,
       SKILL.md의 지침에 따라 LLM이 그 스크립트를 컴퓨터 명령어 실행 Tool로 직접 실행합니다.
-      <strong>Skill이 "무엇을, 어떤 순서로 할지"를 알려주고, Tool이 "실제로 실행"하는 것</strong>입니다.
+      <strong>Skill이 "무엇을, 어떻게 할지"를 알려주고, Tool이 "실제로 실행"하는 것</strong>입니다.
       LLM은 지침을 읽고 → 스크립트를 돌리고 → 결과를 확인하고 → 다음 단계로 넘어갑니다.
     </p>
 
@@ -1375,13 +1426,12 @@ excel-report/
       Tool도 중요하고, MCP도 중요하고, Skill도 중요하고, 하네스도 중요하지만 —
       결국 이 모든 것의 중심에는 두뇌인 <strong>LLM</strong>이 있다는 걸요.
       나머지는 과장 좀 보태서 팔다리를 붙이고 옷을 입히는 작업입니다.
-      팔다리 없는 두뇌는 불편하지만, <strong>두뇌 없는 팔다리는 아예 쓸모가 없으니까요.</strong>
+      팔다리 없는 두뇌는 불편하지만, <strong>두뇌 없는 팔다리는 아예 동작하지 않으니까요.</strong>
     </p>
 
     <p>
-      그래서 전 세계가 자체 LLM을 만들려고 난리입니다.
-      대한민국도 정부와 기업이 협업해서 자체 모델을 만들려 하고 있고요.
       그만큼 LLM을 보유한다는 것 자체가 전략적 자산이 된 시대입니다.
+      그래서 대한민국도 정부와 기업이 협업해서 자체 모델을 만들려 하고 있고요.
     </p>
 
     <p>
