@@ -593,6 +593,10 @@
     padding-left: 0.5rem;
   }
 
+  .toc-item:focus {
+    outline: none;
+  }
+
   .toc-num {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -603,6 +607,63 @@
   .toc-label {
     font-size: 0.95rem;
     font-weight: 400;
+  }
+
+  /* ── Scroll to top ── */
+  .scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-decoration: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, border-color 0.2s;
+  }
+
+  .scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .scroll-top:hover {
+    border-color: var(--accent-dim);
+  }
+
+  .scroll-top .arrow {
+    width: 10px;
+    height: 10px;
+    border-left: 2px solid var(--text-dim);
+    border-top: 2px solid var(--text-dim);
+    transform: rotate(45deg) translateY(2px);
+    transition: border-color 0.2s;
+  }
+
+  .scroll-top:hover .arrow {
+    border-color: var(--accent);
+  }
+
+  .scroll-top .label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .scroll-top:hover .label {
+    color: var(--accent);
   }
 
   /* ── Animations ── */
@@ -652,6 +713,12 @@
   <p class="hero-sub">LLM부터 Tool, MCP, AI Agent, Skills, 하네스까지</p>
   <div class="scroll-hint"><span></span></div>
 </header>
+
+<!-- ════════════════════════ SCROLL TO TOP ════════════════════════ -->
+<a class="scroll-top" id="scrollTop" href="#">
+  <span class="arrow"></span>
+  <span class="label">TOP</span>
+</a>
 
 <!-- ════════════════════════ TOC ════════════════════════ -->
 <nav class="toc">
@@ -962,31 +1029,31 @@
     <!-- MCP Ecosystem Diagram -->
     <div class="diagram">
       <div class="diagram-title">MCP 생태계 구조</div>
-      <div class="mcp-grid">
-        <div class="mcp-col">
-          <div class="mcp-item" style="background: rgba(91,141,239,0.1); border: 1px solid rgba(91,141,239,0.25); color: var(--blue);">Claude Code</div>
-          <div class="mcp-item" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: var(--green);">Cursor</div>
-          <div class="mcp-item" style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: var(--purple);">VS Code Copilot</div>
-          <div class="mcp-item" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">나만의 앱</div>
-        </div>
-        <div class="mcp-center">
-          <div class="mcp-connector left">←→</div>
-          <div class="mcp-hub">MCP</div>
-          <div class="mcp-hub-label">표준 프로토콜</div>
-          <div class="mcp-connector right">←→</div>
-        </div>
-        <div class="mcp-col">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem; font-family: var(--font-mono); font-size: 0.78rem;">
+        <div style="color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em;">MCP 서버 — Tool을 제공하는 서비스들</div>
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center;">
           <div class="mcp-item" style="background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25); color: var(--yellow);">Slack 서버</div>
           <div class="mcp-item" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">GitHub 서버</div>
           <div class="mcp-item" style="background: rgba(91,141,239,0.1); border: 1px solid rgba(91,141,239,0.25); color: var(--blue);">DB 서버</div>
           <div class="mcp-item" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: var(--green);">무엇이든</div>
         </div>
+        <div style="color: var(--text-dim);">↕</div>
+        <div class="mcp-hub">MCP</div>
+        <div style="color: var(--text-dim); font-size: 0.65rem; margin-top: -0.5rem;">표준 프로토콜</div>
+        <div style="color: var(--text-dim);">↕</div>
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center;">
+          <div class="mcp-item" style="background: rgba(91,141,239,0.1); border: 1px solid rgba(91,141,239,0.25); color: var(--blue);">Claude Code</div>
+          <div class="mcp-item" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: var(--green);">Cursor</div>
+          <div class="mcp-item" style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: var(--purple);">VS Code Copilot</div>
+          <div class="mcp-item" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">나만의 앱</div>
+        </div>
+        <div style="color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em;">MCP 클라이언트 — LLM을 사용하는 앱들</div>
       </div>
     </div>
 
     <p>
-      왼쪽은 <strong>MCP 클라이언트</strong>(LLM을 사용하는 앱들),
-      오른쪽은 <strong>MCP 서버</strong>(Tool을 제공하는 서비스들)입니다.
+      위쪽이 <strong>MCP 서버</strong>(Tool을 제공하는 서비스들),
+      아래쪽이 <strong>MCP 클라이언트</strong>(LLM을 사용하는 앱들)입니다.
     </p>
     <p>
       MCP가 가운데서 이 둘을 이어줍니다. USB 포트처럼요.
@@ -1272,6 +1339,14 @@ $ARGUMENTS를 프로덕션에 배포합니다:    <span class="comment">← /dep
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.section').forEach(el => observer.observe(el));
+
+  // Scroll to top button
+  const scrollBtn = document.getElementById('scrollTop');
+  const heroEl = document.querySelector('.hero');
+
+  new IntersectionObserver(([entry]) => {
+    scrollBtn.classList.toggle('visible', !entry.isIntersecting);
+  }, { threshold: 0 }).observe(heroEl);
 
 </script>
 
