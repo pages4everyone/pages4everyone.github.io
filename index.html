@@ -710,7 +710,7 @@
   </svg>
   <div class="hero-label">Claude Code Onboarding</div>
   <h1>Claude Code<br><span class="accent">동작 원리</span> 이해하기</h1>
-  <p class="hero-sub">LLM부터 Tool, MCP, AI Agent, Skills, 하네스까지</p>
+  <p class="hero-sub">LLM부터 Tool, MCP, Skills, AI 에이전트 하네스까지</p>
   <div class="scroll-hint"><span></span></div>
 </header>
 
@@ -723,11 +723,11 @@
 <!-- ════════════════════════ TOC ════════════════════════ -->
 <nav class="toc">
   <a class="toc-item" href="#s1"><span class="toc-num">0.1</span><span class="toc-label">LLM의 본질 — 입력과 출력, 그게 전부다</span></a>
-  <a class="toc-item" href="#s2"><span class="toc-num">0.2</span><span class="toc-label">구조화된 출력 — Tool의 탄생</span></a>
-  <a class="toc-item" href="#s3"><span class="toc-num">0.3</span><span class="toc-label">MCP의 등장 — 도구의 USB 포트</span></a>
-  <a class="toc-item" href="#s4"><span class="toc-num">0.4</span><span class="toc-label">파일시스템 + 명령어 실행 — 에이전트의 탄생</span></a>
-  <a class="toc-item" href="#s5"><span class="toc-num">0.5</span><span class="toc-label">Skills의 시대 — 에이전트의 두뇌를 확장하다</span></a>
-  <a class="toc-item" href="#s6"><span class="toc-num">0.6</span><span class="toc-label">하네스 — 부품이 아니라 완성품</span></a>
+  <a class="toc-item" href="#s2"><span class="toc-num">0.2</span><span class="toc-label">구조화된 출력 — Tool(도구)의 탄생</span></a>
+  <a class="toc-item" href="#s3"><span class="toc-num">0.3</span><span class="toc-label">MCP의 등장 — Tool의 표준화</span></a>
+  <a class="toc-item" href="#s4"><span class="toc-num">0.4</span><span class="toc-label">컴퓨터 명령어 실행 Tool — LLM이 날개를 달다</span></a>
+  <a class="toc-item" href="#s5"><span class="toc-num">0.5</span><span class="toc-label">Skills의 시대 — LLM의 전문성을 확장하다</span></a>
+  <a class="toc-item" href="#s6"><span class="toc-num">0.6</span><span class="toc-label">AI 에이전트 하네스 — 부품이 아니라 완성품</span></a>
 </nav>
 
 <!-- ════════════════════════ CONTENT ════════════════════════ -->
@@ -920,7 +920,7 @@
   <!-- ────── 0.2 구조화된 출력과 Tool ────── -->
   <article class="section" id="s2">
     <div class="section-number">0.2</div>
-    <h2>구조화된 출력 <span class="dim">— Tool의 탄생</span></h2>
+    <h2>구조화된 출력 <span class="dim">— Tool(도구)의 탄생</span></h2>
 
     <p>
       전환점은 LLM이 <strong>구조화된 형태의 텍스트</strong>를 안정적으로 출력할 수 있게 되면서 찾아왔습니다.
@@ -968,10 +968,10 @@
       핵심을 짚어보면:
     </p>
     <p>
-      <strong>① LLM은 여전히 텍스트만 출력합니다.</strong> 다만 그 텍스트가 "이 도구를 실행해달라"는 구조화된 요청인 거죠.
+      <strong>① LLM은 여전히 텍스트만 출력합니다.</strong> 다만 그 텍스트가 "이 Tool을 실행해달라"는 구조화된 요청인 거죠.
     </p>
     <p>
-      <strong>② 실제 실행은 외부 시스템이 합니다.</strong> 웹검색을 하는 건 검색 API고, 코드를 돌리는 건 샌드박스 런타임입니다.
+      <strong>② 실제 실행은 외부 시스템이 합니다.</strong> 웹검색을 하는 건 검색 API를 호출하는 코드고, DB에 데이터를 저장하는 건 DB에 접속해서 저장하는 코드입니다.
     </p>
     <p>
       <strong>③ 결과가 다시 LLM에게 돌아옵니다.</strong> LLM은 이 결과를 바탕으로 사용자에게 자연어 응답을 만듭니다.
@@ -1009,21 +1009,34 @@
   <!-- ────── 0.3 MCP ────── -->
   <article class="section" id="s3">
     <div class="section-number">0.3</div>
-    <h2>MCP의 등장 <span class="dim">— 도구의 USB 포트</span></h2>
+    <h2>MCP의 등장 <span class="dim">— Tool의 표준화</span></h2>
 
     <p>
       Tool이 유용하다 보니 모두가 만들기 시작했습니다. 문제는
       <strong>표준이 없었다</strong>는 겁니다.
-    </p>
-    <p>
-      누군가 Slack 연동 Tool을 만들면, 그건 특정 플랫폼에서만 작동했습니다.
-      다른 플랫폼에서 쓰려면 매번 새로 만들어야 했죠.
-      마치 USB가 발명되기 전, 프린터·키보드·마우스가 각각 다른 포트를 쓰던 시절과 같았습니다.
+      누군가 Slack 연동 Tool을 만들면 그건 특정 플랫폼에서만 작동했고,
+      다른 플랫폼에서 쓰려면 매번 새로 만들어야 했습니다.
     </p>
 
     <p>
-      그래서 Anthropic이 <span class="highlight">MCP (Model Context Protocol)</span>를 만들었습니다.
-      <strong>Tool을 표준화된 방식으로 만들고, 공유하고, 재사용</strong>할 수 있게 하는 프로토콜입니다.
+      그래서 Claude를 만든 회사 Anthropic이 <span class="highlight">MCP (Model Context Protocol)</span>라는
+      공통된 약속을 만들었습니다.
+      MCP가 표준화하는 건 대표적으로 크게 세 가지입니다:
+    </p>
+    <p>
+      <strong>① Tool의 발견</strong> — 어떤 Tool이 있는지를 자동으로 알 수 있게 합니다.
+    </p>
+    <p>
+      <strong>② Tool의 스키마</strong> — "이 Tool에 어떤 파라미터를 넣어야 하는지"를 정해진 형식으로 기술합니다.
+    </p>
+    <p>
+      <strong>③ 통신 방식</strong> — Tool을 호출하고 결과를 받는 방식을 하나로 통일합니다.
+    </p>
+    <p>
+      이 세 가지가 표준화되면, <strong>한 번 만든 Tool을 어디서든 그대로 쓸 수 있게 됩니다.</strong>
+      Anthropic이 만들었지만 오픈 표준으로 공개되었고,
+      Google, Microsoft, OpenAI 등도 지원을 선언하면서
+      지금은 <strong>AI 업계 전반의 공통 표준</strong>으로 자리 잡아가고 있습니다.
     </p>
 
     <!-- MCP Ecosystem Diagram -->
@@ -1056,9 +1069,9 @@
       아래쪽이 <strong>MCP 클라이언트</strong>(LLM을 사용하는 앱들)입니다.
     </p>
     <p>
-      MCP가 가운데서 이 둘을 이어줍니다. USB 포트처럼요.
+      MCP가 가운데서 이 둘을 이어줍니다.
       누군가 Slack MCP 서버를 하나 만들어두면, Claude Code에서도, Cursor에서도, 내가 만든 앱에서도
-      <strong>그냥 꽂아서</strong> 쓸 수 있습니다.
+      <strong>그대로</strong> 쓸 수 있습니다.
     </p>
 
     <div class="callout">
@@ -1071,10 +1084,10 @@
 
   <div class="section-divider"></div>
 
-  <!-- ────── 0.4 에이전트의 탄생 ────── -->
+  <!-- ────── 0.4 컴퓨터 명령어 실행 Tool ────── -->
   <article class="section" id="s4">
     <div class="section-number">0.4</div>
-    <h2>파일시스템 + 명령어 실행 <span class="dim">— 에이전트의 탄생</span></h2>
+    <h2>컴퓨터 명령어 실행 Tool <span class="dim">— LLM이 날개를 달다</span></h2>
 
     <p>
       날씨 검색 Tool, 이메일 전송 Tool, 번역 Tool —
@@ -1082,12 +1095,12 @@
       새로운 기능이 필요할 때마다 누군가 Tool을 만들어야 했으니까요.
     </p>
     <p>
-      그러다 결정적인 조합이 등장합니다.
-      LLM에게 <strong>파일 읽기/쓰기 Tool</strong>과 <strong>터미널 명령어 실행 Tool</strong>을
-      쥐어준 것입니다.
+      그러다 결정적인 전환이 일어납니다.
+      LLM에게 <strong>컴퓨터의 명령어를 실행할 수 있는 Tool</strong>을 쥐어준 것입니다.
     </p>
     <p>
-      이 두 개면 끝입니다. 터미널 명령어를 실행할 수 있다는 건,
+      이거 하나면 끝입니다.
+      <code>cat</code>으로 파일을 읽고, <code>echo</code>로 파일을 쓰고,
       <code>curl</code>로 API를 호출하고, <code>npm install</code>로 패키지를 설치하고,
       <code>git commit</code>으로 코드를 저장하고, <code>python</code>으로 스크립트를 돌릴 수 있다는 뜻입니다.
       <strong>일일이 Tool을 만들어줄 필요 없이, LLM이 알아서 할 수 있게 된 것</strong>입니다.
@@ -1096,7 +1109,7 @@
 
     <!-- Agent loop diagram -->
     <div class="diagram">
-      <div class="diagram-title">코딩 에이전트의 작동 루프</div>
+      <div class="diagram-title">LLM + 컴퓨터 명령어 실행 Tool의 작동 루프</div>
       <div class="agent-loop">
         <div class="agent-step" style="background: rgba(91,141,239,0.1); border: 1px solid rgba(91,141,239,0.25); color: var(--blue);">
           사용자: "이 버그 좀 고쳐줘"
@@ -1107,20 +1120,32 @@
             LLM이 상황 판단
           </div>
           <div class="agent-arrow">↓</div>
-          <div class="agent-step tool" style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: var(--purple);">
-            Tool: 파일 읽기 📄
+          <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
+            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽기)" }
+          </div>
+          <div class="agent-arrow">↓</div>
+          <div class="agent-step" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">
+            컴퓨터: 파일 읽기 실행 → 결과를 LLM에게 전달
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
             LLM이 코드 분석
           </div>
           <div class="agent-arrow">↓</div>
-          <div class="agent-step tool" style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: var(--purple);">
-            Tool: 파일 수정 ✏️
+          <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
+            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(파일 수정)" }
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">
-            Tool: 테스트 실행 ▶
+            컴퓨터: 파일 수정 실행
+          </div>
+          <div class="agent-arrow">↓</div>
+          <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
+            LLM: { "tool": "컴퓨터 명령어 실행", "명령어": "(테스트 실행)" }
+          </div>
+          <div class="agent-arrow">↓</div>
+          <div class="agent-step" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: var(--red);">
+            컴퓨터: 테스트 실행 → 결과를 LLM에게 전달
           </div>
           <div class="agent-arrow">↓</div>
           <div class="agent-step" style="background: rgba(232,123,53,0.1); border: 1px solid rgba(232,123,53,0.25); color: var(--accent);">
@@ -1137,36 +1162,31 @@
     </div>
 
     <p>
-      이게 바로 <strong>Claude Code</strong> 같은 코딩 에이전트의 작동 방식입니다.
-    </p>
-    <p>
+      컴퓨터 명령어 실행 Tool 하나를 얻었을 뿐인데,
       코드를 읽고 → 이해하고 → 수정하고 → 테스트를 돌리고 → 실패하면 다시 고치고 →
-      성공하면 커밋까지. <strong>이 모든 과정을 LLM이 스스로 판단하며 반복합니다.</strong>
+      성공하면 커밋까지. <strong>이 모든 과정을 LLM이 스스로 판단하며 반복할 수 있게 되었습니다.</strong>
       사람이 하던 것과 동일한 루프를 도는 거죠.
     </p>
 
     <p>
       여기서 꼭 짚고 넘어가야 할 게 있습니다.
-      LLM이 <code>{"tool": "read_file", ...}</code> 같은 구조화된 출력을 하면,
+      LLM이 <code>{"tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽기)"}</code> 같은 구조화된 출력을 하면,
       <strong>누군가는 그걸 받아서 진짜로 실행해줘야 합니다.</strong>
     </p>
     <p>
-      그 "누군가"가 바로 <span class="highlight">호스트 시스템</span>입니다.
-      Claude Code의 경우, 그게 <strong>여러분의 컴퓨터</strong>입니다.
-      LLM이 <code>{"tool": "read_file"}</code>을 출력하면, 여러분의 컴퓨터가 실제로 파일을 열어서 내용을 LLM에게 돌려줍니다.
-      <code>{"tool": "bash", "command": "npm test"}</code>를 출력하면, 여러분의 터미널에서 진짜로 실행됩니다.
+      그 "누군가"는 <span class="highlight">어떤 컴퓨터</span>도 될 수 있습니다.
+      Claude Code의 경우, 기본적으로 <strong>여러분의 컴퓨터</strong>가 직접 실행합니다.
+      LLM이 "파일을 읽어달라"고 출력하면 여러분의 컴퓨터가 실제로 파일을 열어서 결과를 LLM에게 돌려주고,
+      "테스트를 실행해달라"고 출력하면 여러분의 컴퓨터에서 진짜로 테스트가 돌아갑니다.
+      하지만 이 실행 환경은 다른 서버 컴퓨터가 될 수도 있고, 클라우드 서비스가 될 수도 있습니다.
     </p>
     <p>
-      ChatGPT라면? OpenAI의 서버가 대신 실행합니다.
-      웹의 Claude라면? Anthropic의 서버가 실행합니다.
-      <strong>LLM은 항상 "이 Tool을 이 파라미터로 실행해달라"는 구조화된 출력을 할 뿐이고, 실행은 언제나 다른 누군가의 몫</strong>입니다.
+      <strong>LLM은 항상 "이 Tool을 이 파라미터로 실행해달라"는 구조화된 출력을 할 뿐이고, 실행은 언제나 어딘가의 컴퓨터가 대신 하는 것</strong>입니다.
     </p>
 
     <p>
-      그래서 에이전트의 공식은 이렇습니다:
-      <strong>"도구를 쓸 줄 아는 LLM + 도구를 실행해주는 호스트 + 적절한 도구 세트 = 에이전트"</strong>.
-      LLM이 판단하고, 호스트가 실행하고, 결과가 다시 돌아오고,
-      이 <span class="highlight">루프가 자율적으로 돌아가는 것</span>이 에이전트입니다.
+      LLM이 컴퓨터 명령어 실행 Tool을 사용할 수 있게 된 순간,
+      <strong>이론상 컴퓨터로 할 수 있는 모든 것이 가능해졌습니다.</strong>
     </p>
   </article>
 
@@ -1175,12 +1195,12 @@
   <!-- ────── 0.5 Skills의 시대 ────── -->
   <article class="section" id="s5">
     <div class="section-number">0.5</div>
-    <h2>Skills의 시대 <span class="dim">— 에이전트의 두뇌를 확장하다</span></h2>
+    <h2>Skills의 시대 <span class="dim">— LLM의 전문성을 확장하다</span></h2>
 
     <p>
-      에이전트가 잘 작동하려면 Tool 외에도 많은 지침이 필요합니다.
+      LLM이 잘 작동하려면 Tool 외에도 많은 지침이 필요합니다.
       "커밋할 때는 이렇게 해라", "우리 팀 API 규칙은 이거다", "배포 절차는 이 순서로" 같은 것들.
-      처음엔 이걸 전부 <strong>하나의 거대한 프롬프트</strong>에 넣었습니다.
+      처음엔 이걸 전부 <strong>하나의 거대한 프롬프트(입력)</strong>에 넣었습니다.
     </p>
     <p>
       문제는 — 0.1에서 봤듯이 — LLM에게 넣을 수 있는 입력에는 한계가 있다는 겁니다.
@@ -1190,7 +1210,7 @@
     </p>
     <p>
       그래서 나온 게 <span class="highlight">Skill</span>입니다.
-      <strong>에이전트는 평소에 각 Skill의 이름과 짧은 설명만 알고 있다가,
+      <strong>LLM은 평소에 각 Skill의 이름과 짧은 설명만 알고 있다가,
       실제로 필요한 순간에만 해당 Skill의 내용을 로드</strong>합니다.
       컨텍스트를 낭비하지 않으면서도, 필요할 때는 전문적인 지침을 바로 꺼내 쓸 수 있는 구조입니다.
     </p>
@@ -1198,19 +1218,19 @@
     <p>
       Skill의 실체는 <strong>폴더</strong>입니다.
       그 안에 지침 파일(<code>SKILL.md</code>), 템플릿, 스크립트, 코드 파일, 참고 문서 등이 들어있고,
-      에이전트가 필요할 때 필요한 파일을 쏙쏙 꺼내 씁니다.
+      LLM이 필요할 때 필요한 파일을 쏙쏙 꺼내 씁니다.
     </p>
 
     <div class="code-block">
 <span class="comment"># Skill 하나의 구조 — 결국 폴더입니다</span>
 
-my-skill/
-├── <span class="accent">SKILL.md</span>           <span class="comment"># 주요 지침 (이것만 필수)</span>
-├── template.md        <span class="comment"># 템플릿이 될 수도 있고</span>
-├── examples/
-│   └── sample.md      <span class="comment"># 예제 모음이 될 수도 있고</span>
+excel-report/
+├── <span class="accent">SKILL.md</span>              <span class="comment"># 주요 지침 (이것만 필수)</span>
+├── template.xlsx         <span class="comment"># 보고서 템플릿 파일</span>
+├── reference/
+│   └── column-rules.md   <span class="comment"># 컬럼별 규칙 정리</span>
 └── scripts/
-    └── validate.sh    <span class="comment"># 스크립트가 될 수도 있고... 뭐든 가능</span>
+    └── validate.py       <span class="comment"># 데이터 검증 스크립트</span>
     </div>
 
     <p>
@@ -1218,43 +1238,39 @@ my-skill/
     </p>
 
     <div class="code-block">
-<span class="comment"># 파일: .claude/skills/deploy/SKILL.md</span>
+<span class="comment"># 파일: .claude/skills/excel-report/SKILL.md</span>
 
 <span class="accent">---</span>
-<span class="key">name</span>: deploy
-<span class="key">description</span>: <span class="str">프로덕션에 애플리케이션 배포</span>
-<span class="key">disable-model-invocation</span>: <span class="str">true</span>  <span class="comment">← Claude가 멋대로 배포 못하게</span>
+<span class="key">name</span>: excel-report
+<span class="key">description</span>: <span class="str">엑셀 데이터를 분석하고 월간 보고서를 생성합니다</span>
 <span class="accent">---</span>
 
-$ARGUMENTS를 프로덕션에 배포합니다:    <span class="comment">← /deploy staging 하면 $ARGUMENTS = "staging"</span>
+월간 보고서를 생성합니다:
 
-<span class="accent">1.</span> 테스트 스위트 실행
-<span class="accent">2.</span> 애플리케이션 빌드
-<span class="accent">3.</span> 배포 타겟에 푸시
-<span class="accent">4.</span> 배포 성공 여부 확인
+<span class="accent">1.</span> 엑셀 파일에서 데이터를 읽어옴
+<span class="accent">2.</span> [column-rules.md](reference/column-rules.md) 기준으로 데이터 정리
+<span class="accent">3.</span> <span class="accent">python scripts/validate.py</span> 로 데이터 검증
+<span class="accent">4.</span> template.xlsx 기반으로 보고서 생성
     </div>
 
     <p>
-      이 파일 하나로 에이전트는 <code>/deploy</code>라는 새로운 능력을 얻습니다.
+      이 파일 하나로 LLM은 <code>/excel-report</code>라는 새로운 능력을 얻습니다.
       Skill은 이렇게 <strong>누구나 만들 수 있고, 공유할 수 있고, 꽂으면 바로 작동</strong>합니다.
     </p>
 
     <p>
-      더 강력한 Skill은 <strong>스크립트를 번들</strong>하거나,
-      <strong>실행 전에 외부 데이터를 주입</strong>하거나,
-      <strong>별도 에이전트를 띄워서 격리된 환경에서 실행</strong>하기도 합니다.
-      단순한 텍스트 지침이 아니라, 에이전트의 능력을 근본적으로 확장하는 모듈인 거죠.
+      여기서 주목할 점은 — 0.4에서 배운 <strong>컴퓨터 명령어 실행 Tool과 Skill이 결합</strong>된다는 것입니다.
+      Skill 폴더 안에 스크립트(<code>validate.py</code>)가 들어있고,
+      SKILL.md의 지침에 따라 LLM이 그 스크립트를 컴퓨터 명령어 실행 Tool로 직접 실행합니다.
+      <strong>Skill이 "무엇을, 어떤 순서로 할지"를 알려주고, Tool이 "실제로 실행"하는 것</strong>입니다.
+      LLM은 지침을 읽고 → 스크립트를 돌리고 → 결과를 확인하고 → 다음 단계로 넘어갑니다.
     </p>
 
     <div class="callout">
       <p>
-        비유를 바꿔봅시다.<br><br>
-        Tool이 <strong>손과 발</strong>이라면,<br>
-        Skill은 <strong>기술과 경험</strong>입니다.<br><br>
-        같은 손을 가져도 목수의 손과 프로그래머의 손은 다릅니다.
-        도구가 같아도 <strong>어떤 Skill이 장착되어 있느냐</strong>에 따라
-        에이전트의 능력은 완전히 달라집니다.
-        그리고 이 Skill은 <strong>마크다운 파일 하나</strong>로 만들고 공유할 수 있습니다.
+        Skill이 없으면 LLM은 매번 "엑셀 보고서를 어떻게 만들어야 하는지", "메일은 어떤 형식으로 보내야 하는지" 등을 처음부터 판단해야 합니다.
+        Skill이 있으면 <strong>검증된 절차와 스크립트를 그대로 따라가기만 하면 됩니다.</strong>
+        같은 LLM이라도 어떤 Skill이 장착되어 있느냐에 따라 능력은 완전히 달라집니다.
       </p>
     </div>
 
@@ -1262,31 +1278,34 @@ $ARGUMENTS를 프로덕션에 배포합니다:    <span class="comment">← /dep
 
   <div class="section-divider"></div>
 
-  <!-- ────── 0.6 하네스 ────── -->
+  <!-- ────── 0.6 AI 에이전트 하네스 ────── -->
   <article class="section" id="s6">
     <div class="section-number">0.6</div>
-    <h2>하네스 <span class="dim">— 부품이 아니라 완성품</span></h2>
+    <h2>AI 에이전트 하네스 <span class="dim">— 부품이 아니라 완성품</span></h2>
 
     <p>
       지금까지 부품을 하나씩 살펴봤습니다.
-      Tool, MCP, 에이전트 루프, Skill, 그리고 이 모든 걸 실행해주는 호스트 시스템까지.
+      LLM, Tool, MCP, 컴퓨터 명령어 실행 환경, Skill —
+      이것들은 각각 강력하지만, 그 자체로는 쓸 수 있는 제품이 아닙니다.
     </p>
     <p>
-      그런데 실제로 쓸 수 있는 에이전트를 만들려면,
       이 부품들을 <strong>하나로 조립</strong>해야 합니다.
       어떤 Tool을 쓸 수 있게 할지, 어떤 Skill을 언제 로드할지,
-      컨텍스트 윈도우가 가득 차면 어떻게 할지, 에이전트가 위험한 행동을 하려 하면 어떻게 막을지,
+      컨텍스트 윈도우가 가득 차면 어떻게 할지, LLM이 위험한 행동을 하려 하면 어떻게 막을지,
       세션이 끊기면 어떻게 이어갈지 —
       이런 것들을 <strong>전부 설계하고 관리하는 시스템</strong>이 필요합니다.
     </p>
     <p>
-      이것을 <span class="highlight">하네스(Harness)</span>라고 부릅니다.
+      이것을 <span class="highlight">AI 에이전트 하네스(Harness)</span>라고 부릅니다.
+      LLM이 판단하고, 컴퓨터가 실행하고, 결과가 다시 돌아오는 루프를 자율적으로 돌리면서
+      실제 업무를 수행하는 시스템 — 이것이 <strong>AI 에이전트</strong>이고,
+      그 에이전트를 감싸고 있는 전체 설정과 구조가 <strong>하네스</strong>입니다.
     </p>
 
     <p>
-      <strong>Claude Code는 하나의 하네스</strong>입니다.
+      <strong>Claude Code는 하나의 AI 에이전트 하네스</strong>입니다.
       Cursor도 하네스고, 여러분이 Agent SDK로 직접 만드는 것도 하네스입니다.
-      같은 LLM이라도 어떤 하네스에 담기느냐에 따라 전혀 다른 에이전트가 됩니다.
+      같은 LLM이라도 어떤 하네스에 담기느냐에 따라 전혀 다른 AI 에이전트가 됩니다.
     </p>
     <p>
       그리고 Claude Code는 이 하네스를 <strong>여러분이 직접 설정할 수 있게</strong> 열어두었습니다.
@@ -1310,15 +1329,23 @@ $ARGUMENTS를 프로덕션에 배포합니다:    <span class="comment">← /dep
       </p>
     </div>
 
+    <p>
+      0.4에서 봤듯이 컴퓨터로 실행할 수 있는 건 이론상 전부 가능합니다.
+      AI 에이전트 자체도 컴퓨터에서 실행되는 프로그램이니,
+      <strong>AI 에이전트가 또 다른 AI 에이전트를 띄우는 것(SubAgent)</strong>도 가능합니다.
+      이론상 무한한 확장이 가능한 구조인 거죠.
+      (물론 실제로는 비용, 안정성 등의 이유로 시스템적으로 적절히 제한합니다.)
+    </p>
+
     <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
       <p>
         <strong>진화의 전체 그림:</strong><br><br>
         <strong>입력 → 출력</strong> (순수 LLM)<br>
         → <strong>+ 구조화된 출력</strong> (Tool 호출 가능)<br>
-        → <strong>+ MCP</strong> (표준화된 도구 생태계)<br>
-        → <strong>+ 파일시스템 & 명령어 실행</strong> (에이전트)<br>
-        → <strong>+ Skill</strong> (에이전트에게 전문성을 부여하는 확장 모듈)<br>
-        → <strong>+ 하네스</strong> (이 모든 걸 조립한 완성품)<br><br>
+        → <strong>+ MCP</strong> (표준화된 Tool 생태계)<br>
+        → <strong>+ 컴퓨터 명령어 실행 Tool</strong> (LLM이 날개를 달다)<br>
+        → <strong>+ Skill</strong> (LLM에게 전문성을 부여하는 확장 모듈)<br>
+        → <strong>+ AI 에이전트 하네스</strong> (이 모든 걸 조립한 완성품)<br><br>
         LLM 자체는 한 번도 변한 적 없습니다. 여전히 입력을 받아 출력을 만들 뿐입니다.
         <strong>변한 건 LLM을 둘러싼 세계입니다.</strong>
       </p>
