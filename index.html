@@ -813,12 +813,10 @@
       "다음 단어 예측기"가 "지시를 따르는 어시스턴트"로 다듬어집니다.)
     </p>
     <p>
-      <strong>다만, 그게 너무나도 — 정말 경이로울 정도로 — 잘 됩니다.</strong>
+      <strong>다만, 그게 너무나도 — 정말 경이로울 정도로 — 잘 될 뿐입니다.</strong>
       수학 문제를 풀고, 코드의 논리적 오류를 찾아내고, 외국어를 번역하고,
-      사진 한 장을 보고 상황을 파악하고,
-      복잡한 요구사항을 이해해서 구조화된 결과물을 만들어냅니다.
-      "다음 토큰 예측"이라는 단순한 원리에서 이런 능력이 나온다는 것 자체가
-      현대 AI의 가장 놀라운 발견 중 하나입니다.
+      사진 한 장을 보고 상황을 파악합니다.
+      "다음 토큰 예측"이라는 단순한 원리가 마치 <strong>"지능"</strong>처럼 동작하게 되었습니다.
     </p>
     <div class="callout" style="border-left-color: var(--purple); background: rgba(167,139,250,0.08);">
       <p>
@@ -826,9 +824,7 @@
         답변을 바로 출력하는 대신,
         <strong>추론 과정을 토큰으로 먼저 출력한 뒤 답변을 출력하게 학습시킨 것</strong>입니다.
         "생각한다"는 것도 결국 출력의 일부인 거죠.
-        그런데 이 변화가 가져온 결과가 놀랍습니다 —
-        이전에는 못 풀던 고난도 추론 문제를 풀어내고,
-        박사급 과학 문제에서 인간 전문가를 넘어서기 시작했습니다.
+        이 기술로 LLM의 성능은 한층 높아졌습니다.
       </p>
     </div>
     <p>
@@ -1211,10 +1207,10 @@
       Claude Code의 경우, 기본적으로 <strong>여러분의 컴퓨터</strong>가 직접 실행합니다.
       LLM이 <code>{"tool": "컴퓨터 명령어 실행", "명령어": "(파일 읽는 명령어)"}</code>를 출력하면 여러분의 컴퓨터가 실제로 파일을 열어서 결과를 LLM에게 돌려주고,
       <code>{"tool": "컴퓨터 명령어 실행", "명령어": "(테스트 실행 명령어)"}</code>를 출력하면 여러분의 컴퓨터에서 진짜로 테스트가 돌아갑니다.
-      하지만 이 실행 환경은 다른 서버 컴퓨터가 될 수도 있고, 클라우드 서비스가 될 수도 있습니다.
+      이 실행 환경은 다른 서버 컴퓨터가 될 수도 있고, 클라우드 서비스가 될 수도 있습니다.
     </p>
     <p>
-      <strong>LLM은 항상 "이 Tool을 이 파라미터로 실행해달라"는 구조화된 출력을 할 뿐이고, 실행은 언제나 어딘가의 컴퓨터가 대신 하는 것</strong>입니다.
+      <strong>LLM은 항상 "{"tool": "컴퓨터 명령어 실행", "명령어": "..."}" 같은 구조화된 출력을 할 뿐이고, 실행은 언제나 어딘가의 컴퓨터가 대신 하는 것</strong>입니다.
     </p>
 
     <p>
@@ -1274,15 +1270,15 @@
     </p>
 
     <div class="code-block">
-<span class="comment"># Skill 하나의 구조 — 결국 폴더입니다</span>
+<span class="comment"># Skill 하나의 구조 — 결국 폴더입니다 (예시)</span>
 
 excel-report/
-├── <span class="accent">SKILL.md</span>              <span class="comment"># 주요 지침 (이것만 필수)</span>
-├── template.xlsx         <span class="comment"># 보고서 템플릿 파일</span>
+├── <span class="accent">SKILL.md</span>              <span class="comment"># 주요 지침 (이것만 필수, 나머지는 자유)</span>
+├── template.xlsx         <span class="comment"># 보고서 템플릿이 될 수도 있고</span>
 ├── reference/
-│   └── column-rules.md   <span class="comment"># 컬럼별 규칙 정리</span>
+│   └── column-rules.md   <span class="comment"># 참고 문서가 될 수도 있고</span>
 └── scripts/
-    └── validate.py       <span class="comment"># 데이터 검증 스크립트</span>
+    └── validate.py       <span class="comment"># 스크립트가 될 수도 있고... 뭐든 가능</span>
     </div>
 
     <p>
@@ -1313,7 +1309,7 @@ excel-report/
 
     <p>
       여기서 주목할 점은 — 4장에서 배운 <strong>컴퓨터 명령어 실행 Tool과 Skill이 결합</strong>된다는 것입니다.
-      Skill 폴더 안에 스크립트(<code>validate.py</code>)가 들어있고,
+      예시를 보면 Skill 폴더 안에 스크립트(<code>validate.py</code>)가 들어있고,
       SKILL.md의 지침에 따라 LLM이 그 스크립트를 컴퓨터 명령어 실행 Tool로 직접 실행합니다.
       <strong>Skill이 "무엇을, 어떻게 할지"를 알려주고, Tool이 "실제로 실행"하는 것</strong>입니다.
       LLM은 지침을 읽고 → 스크립트를 돌리고 → 결과를 확인하고 → 다음 단계로 넘어갑니다.
@@ -1385,8 +1381,8 @@ excel-report/
     <p>
       4장에서 봤듯이 컴퓨터로 실행할 수 있는 건 이론상 전부 가능합니다.
       AI 에이전트 자체도 컴퓨터에서 실행되는 프로그램이니,
-      <strong>AI 에이전트가 또 다른 AI 에이전트를 띄우는 것(SubAgent 등)</strong>도 가능합니다.
-      이론상 무한한 확장이 가능한 구조인 거죠.
+      <strong>AI 에이전트가 또 다른 AI 에이전트를 실행(SubAgent 등)</strong>하는 것도 가능합니다.
+      이론상 무한히 확장이 가능한 구조인 거죠.
       (물론 실제로는 비용, 안정성 등의 이유로 시스템적으로 적절히 제한합니다.)
     </p>
 
@@ -1470,7 +1466,7 @@ excel-report/
     </p>
 
     <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 2rem; text-align: center;">
-      다시 한번 강조합니다 — 이 부록은 <strong>유머</strong>입니다. 투자 조언이 절대 아닙니다.<br>
+      다시 한번 강조합니다 — 이 부록은 투자 조언이 절대 아닙니다.<br>
       2026년 3월 기준 정보이며, 이후 상황은 얼마든지 달라질 수 있습니다. 투자 판단은 본인의 책임입니다.
     </p>
   </article>
