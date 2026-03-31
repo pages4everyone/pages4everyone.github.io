@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Windows 환경 셋업 가이드</title>
+<title>Windows 환경 셋업 가이드 — Claude Code Onboarding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
+<!-- ════════════════════════ HERO ════════════════════════ -->
 <header class="hero">
   <svg width="80" height="56" viewBox="0 0 80 56" fill="none" style="margin-bottom: 1.5rem; position: relative; z-index: 1; opacity: 0; animation: fadeUp 0.8s ease forwards 0.1s;">
     <rect x="16" y="0" width="48" height="24" rx="8" fill="#D77757"/>
@@ -21,18 +22,381 @@
   </svg>
   <div class="hero-label">Claude Code Onboarding — 02</div>
   <h1>Windows 환경<br><span class="accent">셋업 가이드</span></h1>
-  <p class="hero-sub">Claude Code를 Windows에서 시작하기 위한 환경 설정</p>
+  <p class="hero-sub">Git, VS Code, Claude Code — 하나씩 따라하면 끝</p>
   <div class="scroll-hint"><span></span></div>
 </header>
 
-<main class="content" style="margin-top: 4rem;">
-  <article class="section visible">
-    <div class="section-number">준비 중</div>
-    <h2>곧 업데이트됩니다</h2>
-    <p>이 페이지는 현재 작성 중입니다.</p>
-    <p><a href="../" style="color: var(--accent);">← 메인으로 돌아가기</a></p>
+<!-- ════════════════════════ SCROLL TO TOP ════════════════════════ -->
+<a class="scroll-top" id="scrollTop" href="#">
+  <span class="arrow"></span>
+  <span class="label">TOP</span>
+</a>
+
+<!-- ════════════════════════ TOC ════════════════════════ -->
+<nav class="toc">
+  <a class="toc-item" href="#s0"><span class="toc-num">0</span><span class="toc-label">시작하기 전에</span></a>
+  <a class="toc-item" href="#s1"><span class="toc-num">1</span><span class="toc-label">Git 설치</span></a>
+  <a class="toc-item" href="#s2"><span class="toc-num">2</span><span class="toc-label">VS Code 설치 (권장)</span></a>
+  <a class="toc-item" href="#s3"><span class="toc-num">3</span><span class="toc-label">PowerShell이란?</span></a>
+  <a class="toc-item" href="#s4"><span class="toc-num">4</span><span class="toc-label">Claude Code 설치</span></a>
+  <a class="toc-item" href="#s5"><span class="toc-num">5</span><span class="toc-label">로그인</span></a>
+  <a class="toc-item" href="#s6"><span class="toc-num">6</span><span class="toc-label">설치 완료 확인</span></a>
+</nav>
+
+<!-- ════════════════════════ CONTENT ════════════════════════ -->
+<main class="content">
+
+  <!-- ────── 0. 시작하기 전에 ────── -->
+  <article class="section" id="s0">
+    <div class="section-number">0</div>
+    <h2>시작하기 전에</h2>
+
+    <p>
+      이 가이드는 Windows 컴퓨터에 <strong>Claude Code</strong>를 설치하는 과정을 안내합니다.
+      프로그래밍 경험이 전혀 없어도 괜찮습니다. 화면에 보이는 대로 따라하면 됩니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">설치할 것 3가지</div>
+      <div class="flow">
+        <div class="flow-node input">Git</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node tool">VS Code</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node model">Claude Code</div>
+      </div>
+      <div style="text-align: center; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);">
+        순서대로 설치합니다. 약 20~30분 소요.
+      </div>
+    </div>
+
+    <p><strong>필요한 것:</strong></p>
+    <p>
+      — Windows 10 이상<br>
+      — 인터넷 연결<br>
+      — Claude 계정 (Pro, Max, Team, 또는 Enterprise)
+    </p>
+
+    <div class="callout">
+      <p>
+        각 프로그램이 왜 필요한지 간단히 설명하면:<br><br>
+        <strong>Git</strong> — Claude Code가 내부적으로 사용하는 필수 부품입니다. 직접 쓸 일은 없지만 없으면 안 됩니다.<br>
+        <strong>VS Code</strong> — 파일과 폴더를 보면서 작업할 수 있는 편집기입니다. 필수는 아니지만 강력 권장합니다.<br>
+        <strong>Claude Code</strong> — 오늘의 주인공. AI가 여러분의 컴퓨터에서 직접 코드를 읽고 쓰고 실행합니다.
+      </p>
+    </div>
   </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 1. Git 설치 ────── -->
+  <article class="section" id="s1">
+    <div class="section-number">1</div>
+    <h2>Git 설치</h2>
+
+    <p>
+      <strong>① 다운로드 페이지로 이동합니다.</strong>
+    </p>
+    <p>
+      아래 링크를 클릭하세요.
+    </p>
+    <div class="code-block" style="text-align: center;">
+      <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-size: 1rem;">
+        https://git-scm.com/downloads/win
+      </a>
+    </div>
+    <p>
+      페이지가 열리면 상단에 <strong>"Click here to download"</strong> 링크가 보입니다.
+      클릭하면 다운로드가 시작됩니다.
+    </p>
+
+    <p style="margin-top: 2rem;">
+      <strong>② 다운로드된 설치 파일을 실행합니다.</strong>
+    </p>
+    <p>
+      설치 과정에서 여러 화면이 나옵니다. <strong>전부 기본값(Next)으로 진행</strong>하면 됩니다.
+      바꿀 것 없이 계속 <span class="highlight">Next → Next → Next → Install</span> 입니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--green); background: rgba(74,222,128,0.08);">
+      <p>
+        혹시 설치 중에 <strong>"Adjusting your PATH environment"</strong> 화면이 보이면,
+        <strong>"Git from the command line and also from 3rd-party software"</strong>가
+        선택되어 있는지만 확인하세요. 기본값이 이거라 보통 이미 선택되어 있습니다.
+      </p>
+    </div>
+
+    <p style="margin-top: 2rem;">
+      <strong>③ 설치가 끝나면 확인합니다.</strong>
+    </p>
+    <p>
+      키보드에서 <span class="highlight">Windows 키</span>를 누르고 <strong>"powershell"</strong>을 입력한 뒤
+      <strong>Windows PowerShell</strong>을 클릭해서 엽니다.
+    </p>
+    <p>열린 창에 아래를 입력하고 Enter를 누르세요:</p>
+    <div class="code-block">git --version</div>
+    <p>
+      <code>git version 2.xx.x</code> 같은 숫자가 나오면 성공입니다.
+    </p>
+    <p style="font-size: 0.85rem; color: var(--text-dim);">
+      "git을 찾을 수 없습니다" 같은 에러가 나오면 PowerShell을 닫았다가 다시 열어보세요.
+      그래도 안 되면 Git 설치를 다시 시도합니다.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 2. VS Code 설치 ────── -->
+  <article class="section" id="s2">
+    <div class="section-number">2</div>
+    <h2>VS Code 설치 <span class="dim">— 권장</span></h2>
+
+    <p>
+      VS Code(Visual Studio Code)는 파일과 폴더를 보면서 작업할 수 있는 편집기입니다.
+      Claude Code가 파일을 수정하면 바로 눈으로 확인할 수 있어서 훨씬 편합니다.
+    </p>
+
+    <p>
+      <strong>① 다운로드 페이지로 이동합니다.</strong>
+    </p>
+    <div class="code-block" style="text-align: center;">
+      <a href="https://code.visualstudio.com/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-size: 1rem;">
+        https://code.visualstudio.com
+      </a>
+    </div>
+    <p>
+      큰 파란 버튼 <strong>"Download for Windows"</strong>를 클릭하세요.
+    </p>
+
+    <p style="margin-top: 2rem;">
+      <strong>② 다운로드된 설치 파일을 실행합니다.</strong>
+    </p>
+    <p>
+      역시 <strong>기본값(다음)으로 쭉 진행</strong>합니다.
+    </p>
+    <div class="callout" style="border-left-color: var(--green); background: rgba(74,222,128,0.08);">
+      <p>
+        설치 중 <strong>"추가 작업 선택"</strong> 화면이 나오면,
+        아래 두 항목에 체크하는 걸 권장합니다:<br><br>
+        ✅ <strong>PATH에 추가</strong> (기본 체크됨)<br>
+        ✅ <strong>"Code(으)로 열기" 작업을 파일 컨텍스트 메뉴에 추가</strong>
+      </p>
+    </div>
+
+    <p style="margin-top: 2rem;">
+      <strong>③ VS Code를 실행합니다.</strong>
+    </p>
+    <p>
+      설치가 끝나면 자동으로 VS Code가 열립니다.
+      혹시 한국어가 아니라면, 좌측 사이드바의 확장(Extensions) 아이콘을 클릭하고
+      <strong>"Korean Language Pack"</strong>을 검색해서 설치하세요.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 3. PowerShell이란? ────── -->
+  <article class="section" id="s3">
+    <div class="section-number">3</div>
+    <h2>PowerShell이란?</h2>
+
+    <p>
+      Claude Code를 설치하려면 <strong>PowerShell</strong>이라는 곳에 명령어를 입력해야 합니다.
+      PowerShell은 컴퓨터에게 글자로 명령을 내리는 창입니다.
+      마우스로 클릭하는 대신, 키보드로 "이거 해"라고 타이핑하는 방식이죠.
+    </p>
+
+    <p>
+      PowerShell을 여는 방법은 두 가지가 있는데, <strong>어디서 열든 똑같은 것</strong>입니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">PowerShell 여는 법 — 두 가지 방법, 결과는 동일</div>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 4rem; color: var(--blue); font-weight: 700;">방법 A</div>
+          <div>
+            <div style="color: var(--text-bright); margin-bottom: 0.3rem;">단독으로 열기</div>
+            <div style="color: var(--text-dim); font-size: 0.78rem;">
+              Windows 키 → "powershell" 검색 → Windows PowerShell 클릭
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 4rem; color: var(--green); font-weight: 700;">방법 B</div>
+          <div>
+            <div style="color: var(--text-bright); margin-bottom: 0.3rem;">VS Code 안에서 열기</div>
+            <div style="color: var(--text-dim); font-size: 0.78rem;">
+              VS Code 상단 메뉴 → 터미널 → 새 터미널<br>
+              (또는 키보드 단축키: <span style="color: var(--accent);">Ctrl + J</span>)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--purple); background: rgba(167,139,250,0.08);">
+      <p>
+        <strong>핵심: 이 두 가지는 완전히 동일합니다.</strong><br><br>
+        VS Code 안에서 열리는 터미널도 PowerShell이고,
+        시작 메뉴에서 직접 여는 것도 PowerShell입니다.
+        어디서 열든 같은 명령어를 입력하면 같은 결과가 나옵니다.<br><br>
+        다만 VS Code 안에서 열면 <strong>파일 목록을 옆에서 바로 볼 수 있어서</strong> 더 편합니다.
+        이 가이드에서는 방법 B(VS Code 안에서 열기)를 권장합니다.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 4. Claude Code 설치 ────── -->
+  <article class="section" id="s4">
+    <div class="section-number">4</div>
+    <h2>Claude Code 설치</h2>
+
+    <p>
+      <strong>① PowerShell을 엽니다.</strong>
+    </p>
+    <p>
+      위에서 설명한 방법 A 또는 방법 B 중 편한 걸로 여세요.
+    </p>
+
+    <p style="margin-top: 2rem;">
+      <strong>② 아래 명령어를 복사해서 붙여넣고 Enter를 누릅니다.</strong>
+    </p>
+
+    <div class="code-block" style="font-size: 0.9rem; color: var(--accent);">irm https://claude.ai/install.ps1 | iex</div>
+
+    <p style="font-size: 0.85rem; color: var(--text-dim);">
+      복사: 명령어를 드래그한 뒤 <strong>Ctrl + C</strong><br>
+      붙여넣기: PowerShell 창에서 <strong>마우스 우클릭</strong> 또는 <strong>Ctrl + V</strong>
+    </p>
+
+    <p style="margin-top: 1rem;">
+      설치가 진행되면서 텍스트가 쭉 나옵니다. 끝날 때까지 기다리세요.
+    </p>
+
+    <div class="callout">
+      <p>
+        <strong>"이게 무슨 명령어인가요?"</strong><br><br>
+        <code>irm</code>은 인터넷에서 파일을 가져오는 명령어이고,
+        <code>iex</code>는 가져온 파일을 실행하는 명령어입니다.
+        즉, Claude 공식 사이트에서 설치 스크립트를 다운로드해서 바로 실행하는 것입니다.
+      </p>
+    </div>
+
+    <p style="margin-top: 2rem;">
+      <strong>③ 설치가 끝나면 PowerShell을 닫았다가 다시 엽니다.</strong>
+    </p>
+    <p>
+      이 단계가 중요합니다. 새로 설치한 프로그램을 인식하려면
+      PowerShell을 <strong>반드시 새로 열어야</strong> 합니다.
+    </p>
+    <p style="font-size: 0.85rem; color: var(--text-dim);">
+      PowerShell을 다시 열어도 <code>claude</code> 명령어가 인식되지 않으면,
+      <strong>컴퓨터를 재부팅</strong>한 뒤 다시 시도하세요.
+      (특히 회사 PC에서는 재부팅이 필요한 경우가 많습니다.)
+    </p>
+
+    <p style="margin-top: 2rem;">
+      <strong>④ 설치를 확인합니다.</strong>
+    </p>
+    <p>새로 연 PowerShell에 아래를 입력하고 Enter:</p>
+    <div class="code-block">claude --version</div>
+    <p>
+      버전 번호가 나오면 설치 성공입니다.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 5. 로그인 ────── -->
+  <article class="section" id="s5">
+    <div class="section-number">5</div>
+    <h2>로그인</h2>
+
+    <p>
+      <strong>① PowerShell에서 아래를 입력하고 Enter:</strong>
+    </p>
+    <div class="code-block">claude</div>
+
+    <p style="margin-top: 1.5rem;">
+      <strong>② 화면에 안내가 나타납니다. 지시를 따라가세요.</strong>
+    </p>
+    <p>
+      처음 실행하면 PowerShell 화면에 로그인 관련 안내가 표시됩니다.
+      화면의 지시를 따라가면 웹 브라우저가 열리고, Claude 로그인 페이지가 나타납니다.
+      본인의 계정으로 로그인하세요.
+    </p>
+    <p style="font-size: 0.85rem; color: var(--text-dim);">
+      브라우저가 자동으로 안 열리면, PowerShell에서 <strong>C 키</strong>를 누르세요.
+      로그인 주소가 클립보드에 복사됩니다. 브라우저를 직접 열고 주소를 붙여넣으면 됩니다.
+    </p>
+
+    <p style="margin-top: 1.5rem;">
+      <strong>③ 브라우저에서 로그인이 완료되면, PowerShell로 돌아옵니다.</strong>
+    </p>
+    <p>
+      자동으로 로그인이 인식되고, Claude Code 입력 대기 상태가 됩니다.
+      로그인은 최초 1회만 하면 되고, 이후에는 자동으로 인증됩니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>어떤 계정이 필요한가요?</strong><br><br>
+        Claude Code를 사용하려면 아래 중 하나가 필요합니다:<br><br>
+        — <strong>Claude Pro 또는 Max</strong> (개인 유료 구독)<br>
+        — <strong>Claude Team 또는 Enterprise</strong> (회사에서 제공하는 계정)<br><br>
+        무료 계정으로는 사용할 수 없습니다.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 6. 설치 완료 확인 ────── -->
+  <article class="section" id="s6">
+    <div class="section-number">6</div>
+    <h2>설치 완료 확인</h2>
+
+    <p>
+      모든 설치가 끝났습니다. 마지막으로 전체가 잘 동작하는지 확인합니다.
+    </p>
+
+    <p>
+      <strong>① PowerShell에서 아래를 입력하고 Enter:</strong>
+    </p>
+    <div class="code-block">claude doctor</div>
+    <p>
+      Claude Code가 스스로 환경을 점검합니다. 문제가 있으면 무엇이 잘못되었는지 알려줍니다.
+    </p>
+
+    <p style="margin-top: 2rem;">
+      <strong>② VS Code에서 프로젝트 폴더를 열어봅니다.</strong>
+    </p>
+    <p>
+      VS Code를 열고 → 파일 → 폴더 열기 → 작업할 폴더를 선택합니다.<br>
+      그다음 터미널을 열고 (<span class="highlight">Ctrl + J</span>) <code>claude</code>를 입력하면,
+      해당 폴더를 기준으로 Claude Code가 시작됩니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--green); background: rgba(74,222,128,0.08);">
+      <p>
+        <strong>축하합니다!</strong> 환경 설정이 완료되었습니다.<br><br>
+        이제 Claude Code에게 무엇이든 시켜볼 수 있습니다.<br>
+        "이 프로젝트가 뭐 하는 건지 설명해줘"부터 시작해보세요.
+      </p>
+    </div>
+  </article>
+
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 2rem 4rem;">
+    <a href="../" style="color: var(--accent); font-family: var(--font-mono); font-size: 0.85rem;">← 메인으로 돌아가기</a>
+  </div>
+
 </main>
+
+<!-- ════════════════════════ Scroll reveal ════════════════════════ -->
+<script src="../assets/js/main.js"></script>
 
 </body>
 </html>
