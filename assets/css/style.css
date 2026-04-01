@@ -718,6 +718,65 @@
     padding-top: calc(2rem + 48px);
   }
 
+  /* ── Hamburger button (hidden on desktop) ── */
+  .site-nav-burger {
+    display: none;
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .site-nav-burger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--text-dim);
+    border-radius: 1px;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+
+  .site-nav-burger.open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .site-nav-burger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .site-nav-burger.open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* ── Mobile dropdown ── */
+  .site-nav-dropdown {
+    display: none;
+    position: fixed;
+    top: 48px;
+    left: 0;
+    right: 0;
+    z-index: 199;
+    background: rgba(8, 8, 12, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .site-nav-dropdown.open {
+    display: flex;
+  }
+
+  .site-nav-dropdown .site-nav-link {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.75rem;
+  }
+
   /* ── Animations ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -742,7 +801,7 @@
     .skill-arrow-line { display: none; }
     .toc { padding: 0 1.25rem; }
     .site-nav { padding: 0 1rem; }
-    .site-nav-links { gap: 0.25rem; }
-    .site-nav-link { font-size: 0.7rem; padding: 0.35rem 0.6rem; }
+    .site-nav-links { display: none; }
+    .site-nav-burger { display: flex; }
     .site-nav-home { font-size: 0.75rem; }
   }
