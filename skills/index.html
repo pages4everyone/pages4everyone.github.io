@@ -260,11 +260,19 @@ skills.sh, GitHub 등에서 조사해줘.</div>
 .claude/skills/
 └── weekly-report/          <span style="color: var(--text-dim);">← 스킬 이름 = 폴더 이름</span>
     ├── SKILL.md             <span style="color: var(--text-dim);">← 필수. 스킬의 본체</span>
-    ├── template.md          <span style="color: var(--text-dim);">← 선택. 보고서 양식 등</span>
+    ├── template.md          <span style="color: var(--text-dim);">← 선택. 양식, 참고 문서 등</span>
+    ├── scripts/
+    │   ├── validate.sh      <span style="color: var(--text-dim);">← 선택. 셸 스크립트</span>
+    │   └── analyze.py       <span style="color: var(--text-dim);">← 선택. Python 등 어떤 언어든 가능</span>
     └── examples/
         └── sample.md        <span style="color: var(--text-dim);">← 선택. 예시 파일</span>
 </div>
     </div>
+
+    <p style="font-size: 0.85rem; color: var(--text);">
+      scripts/ 안의 파일은 컨텍스트에 로딩되지 않고 실행만 됩니다.
+      스크립트의 출력 결과만 Claude에게 전달되므로 컨텍스트를 절약할 수 있습니다.
+    </p>
 
     <h3 style="margin-top: 2.5rem;">SKILL.md 파일의 구조</h3>
 
@@ -553,18 +561,10 @@ https://github.com/xxx/비슷한-스킬-링크
     <p>
       — 본문이 500줄 이상으로 길어지는 것 (별도 파일로 분리)<br>
       — 참고 파일이 여러 단계로 중첩되는 것 (SKILL.md → a.md → b.md → c.md)<br>
-      — 시간에 따라 바뀌는 정보를 고정값으로 직접 적어두는 것 (API 버전, URL 등)<br>
+      — 시간에 따라 바뀌는 정보를 고정값으로 직접 적어두는 것<br>
       — 설명이 너무 모호해서 Claude가 언제 써야 할지 모르는 것
     </p>
 
-    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
-      <p>
-        <strong>"스킬 만드는 스킬"이라는 개념</strong><br><br>
-        공식 문서를 Claude에게 주고 "이 가이드라인을 참고해서 ~한 스킬을 만들어줘"라고 하면,
-        Claude가 모범 사례를 지키면서 스킬을 작성합니다.<br><br>
-        즉, <strong>스킬 제작 자체를 Claude에게 시키되, 공식 문서를 반드시 함께 전달</strong>하는 것이 핵심입니다.
-      </p>
-    </div>
   </article>
 
   <div class="section-divider"></div>
