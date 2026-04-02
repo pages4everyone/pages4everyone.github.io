@@ -328,7 +328,7 @@ skills.sh, GitHub 등에서 조사해줘.</div>
           <div style="color: var(--green); font-weight: 700; margin-bottom: 0.5rem;">자주 쓰는 선택 필드</div>
           <div style="display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1rem;">
             <div><span style="color: var(--blue);">allowed-tools</span> <span style="color: var(--text);">— 이 스킬이 사용할 수 있는 도구 목록 (Bash, Read, Write 등)</span></div>
-            <div><span style="color: var(--blue);">user-invocable</span> <span style="color: var(--text);">— false로 설정하면 사용자가 /이름으로 직접 실행 불가. Claude가 필요하다고 판단할 때만 자동 실행</span></div>
+            <div><span style="color: var(--blue);">user-invocable</span> <span style="color: var(--text);">— false로 설정하면 /이름 메뉴에서 숨겨짐. Claude는 여전히 자동으로 로딩 가능</span></div>
             <div><span style="color: var(--blue);">argument-hint</span> <span style="color: var(--text);">— /이름 뒤에 뭘 입력해야 하는지 안내 문구 (예: [issue-number])</span></div>
             <div><span style="color: var(--blue);">context</span> <span style="color: var(--text);">— fork로 설정하면 별도의 독립된 Claude 세션에서 실행 (메인 대화에 영향 없음)</span></div>
             <div><span style="color: var(--blue);">model</span> <span style="color: var(--text);">— 이 스킬 실행 시 사용할 AI 모델 (예: claude-sonnet-4-6)</span></div>
@@ -637,6 +637,13 @@ https://github.com/xxx/비슷한-스킬-링크
     ├── SKILL.md              <span style="color: var(--text-dim);">← 핵심 지침</span>
     └── template.md           <span style="color: var(--text-dim);">← 회의록 양식</span>
 </div>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--red); background: rgba(248,113,113,0.08);">
+      <p>
+        <strong>스킬을 새로 만들거나 수정한 뒤에는 Claude Code를 재시작해야 합니다.</strong><br>
+        이미 실행 중인 세션에서는 새 스킬이 인식되지 않습니다.
+      </p>
     </div>
 
     <h3 style="margin-top: 2.5rem;">완성된 스킬 사용법</h3>

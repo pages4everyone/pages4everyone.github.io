@@ -202,7 +202,7 @@
         <div style="display: flex; align-items: flex-start; gap: 1rem;">
           <div style="min-width: 14rem; color: var(--accent); font-weight: 700;">.claude/settings.local.json</div>
           <div style="color: var(--text);">
-            내 인증 정보 저장용. Claude Code가 이 파일을 생성하면 자동으로 Git 제외 처리됨
+            내 인증 정보 저장용. Git에 포함되지 않도록 관리 필요
           </div>
         </div>
         <div style="display: flex; align-items: flex-start; gap: 1rem;">
@@ -223,8 +223,8 @@
     <div class="callout" style="border-left-color: var(--red); background: rgba(248,113,113,0.08);">
       <p>
         <strong>인증 정보는 반드시 <code>.claude/settings.local.json</code>에 넣으세요.</strong><br>
-        Claude Code가 이 파일을 생성하면 자동으로 글로벌 gitignore에 추가됩니다.
-        <code>.claude/settings.json</code>에 넣으면 Git을 통해 유출될 수 있습니다.
+        <code>.claude/settings.json</code>에 넣으면 Git을 통해 유출될 수 있습니다.<br>
+        Git을 사용 중이라면 <code>.gitignore</code>에 <code>.claude/settings.local.json</code>을 추가하는 것도 잊지 마세요.
       </p>
     </div>
 
@@ -280,6 +280,14 @@
       Claude Code가 환경변수에 저장된 Jira 인증 정보를 사용해서
       API로 이슈 목록을 가져오고, 스킬의 양식에 맞춰 보고서를 작성합니다.
     </p>
+
+    <div class="callout" style="border-left-color: var(--green); background: rgba(74,222,128,0.08);">
+      <p>
+        <strong>스킬에 API 사용과 환경변수를 명시하면 더 좋습니다.</strong><br>
+        스킬의 SKILL.md나 요청에 "어떤 API를 사용하고, 인증은 어떤 환경변수를 쓴다"를
+        적어두면 Claude Code가 더 정확하게 동작합니다.
+      </p>
+    </div>
   </article>
 
   <div class="section-divider"></div>
