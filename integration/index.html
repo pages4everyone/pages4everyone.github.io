@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>외부 서비스 연결하기 — Claude Code Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="has-nav">
+
+<!-- ════════════════════════ SITE NAV ════════════════════════ -->
+<nav class="site-nav">
+  <a class="site-nav-home" href="../">Claude Code Onboarding</a>
+  <div class="site-nav-links">
+    <a class="site-nav-link" href="../basics/">동작 원리</a>
+    <a class="site-nav-link" href="../setup/">셋업 가이드</a>
+    <a class="site-nav-link" href="../skills/">스킬 제작</a>
+    <a class="site-nav-link active" href="../integration/">외부 연결</a>
+  </div>
+  <button class="site-nav-burger" onclick="this.classList.toggle('open');document.getElementById('navDrop').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="site-nav-dropdown" id="navDrop">
+  <a class="site-nav-link" href="../basics/">동작 원리</a>
+  <a class="site-nav-link" href="../setup/">셋업 가이드</a>
+  <a class="site-nav-link" href="../skills/">스킬 제작</a>
+  <a class="site-nav-link active" href="../integration/">외부 연결</a>
+</div>
+
+<!-- ════════════════════════ HERO ════════════════════════ -->
+<header class="hero">
+  <svg width="80" height="56" viewBox="0 0 80 56" fill="none" style="margin-bottom: 1.5rem; position: relative; z-index: 1; opacity: 0; animation: fadeUp 0.8s ease forwards 0.1s;">
+    <rect x="16" y="0" width="48" height="24" rx="8" fill="#D77757"/>
+    <rect x="8" y="12" width="64" height="20" rx="8" fill="#D77757"/>
+    <rect x="24" y="8" width="8" height="10" rx="4" fill="#08080c"/>
+    <rect x="48" y="8" width="8" height="10" rx="4" fill="#08080c"/>
+    <rect x="20" y="38" width="10" height="10" rx="5" fill="#D77757"/>
+    <rect x="50" y="38" width="10" height="10" rx="5" fill="#D77757"/>
+  </svg>
+  <div class="hero-label">Claude Code Onboarding — 04</div>
+  <h1>외부 서비스<br><span class="accent">연결하기</span></h1>
+  <p class="hero-sub">API와 인증 정보 관리</p>
+  <div class="scroll-hint"><span></span></div>
+</header>
+
+<!-- ════════════════════════ SCROLL TO TOP ════════════════════════ -->
+<a class="scroll-top" id="scrollTop" href="#">
+  <span class="arrow"></span>
+  <span class="label">TOP</span>
+</a>
+
+<!-- ════════════════════════ TOC ════════════════════════ -->
+<nav class="toc">
+  <a class="toc-item" href="#s0"><span class="toc-num">0</span><span class="toc-label">API란?</span></a>
+  <a class="toc-item" href="#s1"><span class="toc-num">1</span><span class="toc-label">인증 정보가 필요한 이유</span></a>
+  <a class="toc-item" href="#s2"><span class="toc-num">2</span><span class="toc-label">환경변수로 인증 정보 설정하기</span></a>
+  <a class="toc-item" href="#s3"><span class="toc-num">3</span><span class="toc-label">보안 주의사항</span></a>
+  <a class="toc-item" href="#s4"><span class="toc-num">4</span><span class="toc-label">MCP — 미리 세팅된 외부 연결</span></a>
+  <a class="toc-item" href="#ref"><span class="toc-num">+</span><span class="toc-label">참고 자료</span></a>
+</nav>
+
+<!-- ════════════════════════ CONTENT ════════════════════════ -->
+<main class="content">
+
+  <!-- ────── 0. API란? ────── -->
+  <article class="section" id="s0">
+    <div class="section-number">0</div>
+    <h2>API란?</h2>
+
+    <p>
+      <strong>API(Application Programming Interface)</strong>는
+      프로그램끼리 데이터를 주고받기 위한 통로입니다.
+    </p>
+
+    <p>
+      예를 들어, Jira에서 이슈 목록을 가져오고 싶다면
+      Jira 화면을 직접 열지 않아도 API를 통해 데이터만 받아올 수 있습니다.
+      Claude Code가 외부 서비스와 소통할 때도 이 API를 사용합니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">API를 통한 데이터 흐름</div>
+      <div class="flow">
+        <div class="flow-node model">Claude Code</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node tool">API 요청</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node input">외부 서비스</div>
+      </div>
+      <div style="text-align: center; margin-top: 1rem;">
+        <div class="flow">
+          <div class="flow-node input">외부 서비스</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node output">API 응답 (데이터)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node model">Claude Code</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      API를 지원하는 서비스라면 Claude Code에서 연결할 수 있습니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">API를 지원하는 서비스 예시</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.8rem;">
+        <div class="flow-node input">Jira</div>
+        <div class="flow-node input">Notion</div>
+        <div class="flow-node input">Slack</div>
+        <div class="flow-node input">GitHub</div>
+        <div class="flow-node input">Google Calendar</div>
+        <div class="flow-node input">Sentry</div>
+        <div class="flow-node input">Stripe</div>
+        <div class="flow-node input">데이터베이스</div>
+      </div>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 1. 인증 정보가 필요한 이유 ────── -->
+  <article class="section" id="s1">
+    <div class="section-number">1</div>
+    <h2>인증 정보가 필요한 이유</h2>
+
+    <p>
+      API는 아무나 사용할 수 있는 것이 아닙니다.
+      외부 서비스에 접근하려면 <strong>"이 요청이 허가된 사용자로부터 온 것"</strong>임을 증명해야 합니다.
+    </p>
+
+    <p>
+      이 증명에 사용되는 것이 <strong>인증 정보</strong>입니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">인증 정보의 종류</div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 6rem; color: var(--accent); font-weight: 700;">API 키</div>
+          <div style="color: var(--text);">
+            서비스가 발급하는 고유 문자열. 비밀번호와 비슷한 역할
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 6rem; color: var(--green); font-weight: 700;">토큰</div>
+          <div style="color: var(--text);">
+            일정 기간 유효한 인증 문자열. 만료되면 갱신 필요
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 6rem; color: var(--blue); font-weight: 700;">ID + 비밀번호</div>
+          <div style="color: var(--text);">
+            계정 정보를 직접 사용하는 방식. 보안상 API 키나 토큰이 권장됨
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      이 인증 정보를 Claude Code에 알려줘야 외부 서비스에 접근할 수 있습니다.
+      그런데 인증 정보는 민감하기 때문에 코드나 대화에 직접 적으면 안 됩니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--accent);">
+      <p>
+        <strong>인증 정보를 안전하게 전달하는 방법이 환경변수입니다.</strong><br><br>
+        환경변수에 인증 정보를 저장하면,
+        Claude Code는 실제 값을 모른 채로 변수 이름만 사용해서 API를 호출할 수 있습니다.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 2. 환경변수로 인증 정보 설정하기 ────── -->
+  <article class="section" id="s2">
+    <div class="section-number">2</div>
+    <h2>환경변수로 인증 정보 설정하기</h2>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>용어: 환경변수 (Environment Variable)</strong><br>
+        운영체제에 저장되는 이름-값 쌍입니다.
+        프로그램이 실행될 때 이 값을 읽어서 사용할 수 있습니다.
+        예: <code>JIRA_API_TOKEN</code> = <code>abc123xyz</code>
+      </p>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">설정 파일 위치</h3>
+
+    <p>
+      Claude Code의 환경변수는 <strong>settings.json</strong> 파일에서 설정합니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">설정 파일과 용도</div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 14rem; color: var(--accent); font-weight: 700;">.claude/settings.local.json</div>
+          <div style="color: var(--text);">
+            내 인증 정보 저장용. Claude Code가 이 파일을 생성하면 자동으로 Git 제외 처리됨
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 14rem; color: var(--blue); font-weight: 700;">.claude/settings.json</div>
+          <div style="color: var(--text);">
+            팀 공유 설정용. Git에 포함되므로 인증 정보를 넣으면 안 됨
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 14rem; color: var(--green); font-weight: 700;">~/.claude/settings.json</div>
+          <div style="color: var(--text);">
+            모든 프로젝트에 적용되는 개인 설정
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--red); background: rgba(248,113,113,0.08);">
+      <p>
+        <strong>인증 정보는 반드시 <code>.claude/settings.local.json</code>에 넣으세요.</strong><br>
+        Claude Code가 이 파일을 생성하면 자동으로 글로벌 gitignore에 추가됩니다.
+        <code>.claude/settings.json</code>에 넣으면 Git을 통해 유출될 수 있습니다.
+      </p>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">설정 방법</h3>
+
+    <p>
+      프로젝트 폴더 안의 <code>.claude/settings.local.json</code> 파일에
+      <code>env</code> 항목을 추가합니다.
+    </p>
+
+    <div class="code-block" style="font-size: 0.82rem;">
+<span class="comment">// .claude/settings.local.json</span>
+{
+  <span class="key">"env"</span>: {
+    <span class="str">"JIRA_API_TOKEN"</span>: <span class="str">"실제_토큰_값"</span>,
+    <span class="str">"JIRA_HOST"</span>: <span class="str">"https://your-team.atlassian.net"</span>,
+    <span class="str">"JIRA_EMAIL"</span>: <span class="str">"me@example.com"</span>,
+    <span class="str">"SLACK_BOT_TOKEN"</span>: <span class="str">"xoxb-실제_토큰_값"</span>
+  }
+}
+</div>
+
+    <p>
+      이렇게 설정한 뒤 <strong>Claude Code를 재시작</strong>하면 환경변수가 적용됩니다.
+      이미 실행 중인 세션에는 반영되지 않으므로, 설정을 변경하면 반드시 재시작하세요.
+    </p>
+
+    <h3 style="margin-top: 2.5rem;">스킬에서 환경변수 활용</h3>
+
+    <p>
+      섹션 3에서 만든 스킬과 함께 사용하면,
+      Claude Code가 환경변수의 인증 정보로 외부 서비스에 접근하고
+      스킬의 절차에 따라 작업을 수행합니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">스킬 + 환경변수 조합</div>
+      <div class="flow">
+        <div class="flow-node tool">스킬 (절차)</div>
+        <div class="flow-arrow">+</div>
+        <div class="flow-node result">환경변수 (인증)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node output">외부 서비스 접근</div>
+      </div>
+    </div>
+
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);"><span class="comment">(예: Jira에서 이번 스프린트 이슈를 가져와 정리하는 스킬)</span>
+/sprint-report
+
+이번 스프린트 진행 상황 정리해줘.</div>
+
+    <p style="font-size: 0.85rem; color: var(--text);">
+      Claude Code가 환경변수에 저장된 Jira 인증 정보를 사용해서
+      API로 이슈 목록을 가져오고, 스킬의 양식에 맞춰 보고서를 작성합니다.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 3. 보안 주의사항 ────── -->
+  <article class="section" id="s3">
+    <div class="section-number">3</div>
+    <h2>보안 주의사항</h2>
+
+    <p>
+      인증 정보는 유출되면 외부인이 해당 서비스에 접근할 수 있으므로 관리에 주의가 필요합니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">지켜야 할 것</div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 1.5rem; color: var(--green); font-weight: 700;">1</div>
+          <div style="color: var(--text);">
+            <strong style="color: var(--text-bright);">인증 정보는 settings.local.json에만 저장</strong><br>
+            이 파일은 Git에 포함되지 않음
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 1.5rem; color: var(--green); font-weight: 700;">2</div>
+          <div style="color: var(--text);">
+            <strong style="color: var(--text-bright);">대화 중에 인증 정보를 직접 입력하지 않기</strong><br>
+            환경변수 이름만 알려주면 Claude Code가 알아서 값을 읽음
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 1.5rem; color: var(--green); font-weight: 700;">3</div>
+          <div style="color: var(--text);">
+            <strong style="color: var(--text-bright);">토큰은 만료 기한 확인</strong><br>
+            토큰 방식은 일정 기간이 지나면 만료됨. 만료되면 새로 발급받아 교체
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 1.5rem; color: var(--green); font-weight: 700;">4</div>
+          <div style="color: var(--text);">
+            <strong style="color: var(--text-bright);">유출 시 즉시 대응</strong><br>
+            토큰이나 API 키가 유출되면 즉시 폐기하고 새로 발급받아야 함.
+            비밀번호가 유출되면 즉시 변경
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 1.5rem; color: var(--green); font-weight: 700;">5</div>
+          <div style="color: var(--text);">
+            <strong style="color: var(--text-bright);">설정 변경 후 Claude Code 재시작</strong><br>
+            환경변수를 추가하거나 수정한 뒤에는 Claude Code를 재시작해야 반영됨
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 1.5rem; color: var(--green); font-weight: 700;">6</div>
+          <div style="color: var(--text);">
+            <strong style="color: var(--text-bright);">.env 파일 접근 차단 설정</strong><br>
+            settings.json의 permissions에서 민감 파일 읽기를 차단할 수 있음
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      민감 파일 읽기를 차단하는 설정 예시:
+    </p>
+
+    <div class="code-block" style="font-size: 0.82rem;">
+<span class="comment">// .claude/settings.json (팀 공유 가능)</span>
+{
+  <span class="key">"permissions"</span>: {
+    <span class="str">"deny"</span>: [
+      <span class="str">"Read(./.env)"</span>,
+      <span class="str">"Read(./.env.*)"</span>,
+      <span class="str">"Read(./secrets/**)"</span>
+    ]
+  }
+}
+</div>
+
+    <p style="font-size: 0.85rem; color: var(--text);">
+      이 설정은 팀 전체에 적용해도 안전하므로 <code>.claude/settings.json</code>에 넣어도 됩니다.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 4. MCP ────── -->
+  <article class="section" id="s4">
+    <div class="section-number">4</div>
+    <h2>MCP — 미리 세팅된 외부 연결</h2>
+
+    <p>
+      지금까지 설명한 방식은 환경변수에 인증 정보를 넣고
+      Claude Code가 API를 직접 호출하는 방식입니다.
+    </p>
+
+    <p>
+      <strong>MCP(Model Context Protocol)</strong>는 다른 접근 방식입니다.
+      외부 서비스와의 연결 로직을 미리 구현해둔 <strong>별도의 프로그램(MCP 서버)</strong>을 거쳐서 접근합니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>용어: MCP 서버</strong><br>
+        "서버"라는 이름이지만, 반드시 원격 컴퓨터에서 실행되는 것은 아닙니다.
+        내 컴퓨터에서 실행되는 작은 프로그램일 수도 있고,
+        인터넷의 원격 서비스일 수도 있습니다.
+        플러그인이나 확장 프로그램에 가까운 개념입니다.
+      </p>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">MCP 서버의 두 가지 형태</h3>
+
+    <div class="diagram">
+      <div class="diagram-title">로컬 vs 원격 MCP 서버</div>
+      <div style="display: flex; flex-direction: column; gap: 2rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div>
+          <div style="color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;">로컬 (stdio 방식)</div>
+          <div style="color: var(--text); font-size: 0.78rem; margin-bottom: 0.5rem;">
+            내 컴퓨터에서 실행되는 프로그램. Claude Code가 시작할 때 함께 실행되고, 종료하면 함께 종료됨
+          </div>
+          <div class="flow" style="justify-content: flex-start;">
+            <div class="flow-node model">Claude Code</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node tool">로컬 MCP 서버</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node input">외부 서비스</div>
+          </div>
+        </div>
+        <div>
+          <div style="color: var(--green); font-weight: 700; margin-bottom: 0.5rem;">원격 (HTTP 방식)</div>
+          <div style="color: var(--text); font-size: 0.78rem; margin-bottom: 0.5rem;">
+            인터넷에 있는 서비스. URL로 접속해서 사용. 여러 사람이 동시에 사용 가능
+          </div>
+          <div class="flow" style="justify-content: flex-start;">
+            <div class="flow-node model">Claude Code</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node output">원격 MCP 서버</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node input">외부 서비스</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">환경변수 방식과의 차이</h3>
+
+    <div class="diagram">
+      <div class="diagram-title">환경변수 방식 vs MCP 방식</div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 7rem; color: var(--accent); font-weight: 700;">환경변수</div>
+          <div style="color: var(--text);">
+            Claude Code가 매번 API 호출 코드를 직접 작성해서 실행.
+            빠르게 시작 가능하지만 결과가 매번 다를 수 있음
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 7rem; color: var(--green); font-weight: 700;">MCP</div>
+          <div style="color: var(--text);">
+            미리 구현된 코드가 실행되므로 항상 같은 방식으로 동작.
+            일관된 결과를 얻을 수 있지만 MCP 서버 세팅이 필요
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      MCP 서버 자체는 개발자나 서비스 제공자가 만들어둔 것을 사용합니다.
+      사용자가 할 일은 그 MCP 서버를 <strong>Claude Code에 연결</strong>하는 것입니다.
+      연결 방법은 각 MCP 서버 제공자의 가이드를 따르면 됩니다.
+    </p>
+
+    <p style="font-size: 0.85rem; color: var(--text);">
+      MCP는 표준 프로토콜이므로 연결 절차 자체는 동일하지만,
+      서버 주소나 인증 방식 같은 설정값은 서버마다 다릅니다.
+      각 MCP 서버에서 안내하는 대로 연결하는 것이 가장 정확합니다.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 참고 자료 ────── -->
+  <article class="section" id="ref">
+    <div class="section-number">+</div>
+    <h2>참고 자료</h2>
+
+    <p>
+      — <a href="https://code.claude.com/docs/en/settings" target="_blank" rel="noopener" style="color: var(--accent);">Claude Code 설정 문서 (영문)</a> — settings.json 전체 스펙<br>
+      — <a href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noopener" style="color: var(--accent);">환경변수 레퍼런스 (영문)</a> — Claude Code 동작을 제어하는 환경변수 목록 (인증 포함)<br>
+      — <a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener" style="color: var(--accent);">MCP 연결 가이드 (영문)</a> — MCP 서버 설정 및 연결 방법
+    </p>
+  </article>
+
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 2rem 4rem;">
+    <a href="../" style="color: var(--accent); font-family: var(--font-mono); font-size: 0.85rem;">&larr; 메인으로 돌아가기</a>
+  </div>
+
+</main>
+
+<!-- ════════════════════════ Scroll reveal ════════════════════════ -->
+<script src="../assets/js/main.js"></script>
+
+</body>
+</html>

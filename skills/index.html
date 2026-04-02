@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스킬 제작 가이드 — Claude Code Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="has-nav">
+
+<!-- ════════════════════════ SITE NAV ════════════════════════ -->
+<nav class="site-nav">
+  <a class="site-nav-home" href="../">Claude Code Onboarding</a>
+  <div class="site-nav-links">
+    <a class="site-nav-link" href="../basics/">동작 원리</a>
+    <a class="site-nav-link" href="../setup/">셋업 가이드</a>
+    <a class="site-nav-link active" href="../skills/">스킬 제작</a>
+    <a class="site-nav-link" href="../integration/">외부 연결</a>
+  </div>
+  <button class="site-nav-burger" onclick="this.classList.toggle('open');document.getElementById('navDrop').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="site-nav-dropdown" id="navDrop">
+  <a class="site-nav-link" href="../basics/">동작 원리</a>
+  <a class="site-nav-link" href="../setup/">셋업 가이드</a>
+  <a class="site-nav-link active" href="../skills/">스킬 제작</a>
+  <a class="site-nav-link" href="../integration/">외부 연결</a>
+</div>
+
+<!-- ════════════════════════ HERO ════════════════════════ -->
+<header class="hero">
+  <svg width="80" height="56" viewBox="0 0 80 56" fill="none" style="margin-bottom: 1.5rem; position: relative; z-index: 1; opacity: 0; animation: fadeUp 0.8s ease forwards 0.1s;">
+    <rect x="16" y="0" width="48" height="24" rx="8" fill="#D77757"/>
+    <rect x="8" y="12" width="64" height="20" rx="8" fill="#D77757"/>
+    <rect x="24" y="8" width="8" height="10" rx="4" fill="#08080c"/>
+    <rect x="48" y="8" width="8" height="10" rx="4" fill="#08080c"/>
+    <rect x="20" y="38" width="10" height="10" rx="5" fill="#D77757"/>
+    <rect x="50" y="38" width="10" height="10" rx="5" fill="#D77757"/>
+  </svg>
+  <div class="hero-label">Claude Code Onboarding — 03</div>
+  <h1>스킬<br><span class="accent">제작 가이드</span></h1>
+  <p class="hero-sub">반복되는 작업을 스킬로 만들어 한 번에 끝내기</p>
+  <div class="scroll-hint"><span></span></div>
+</header>
+
+<!-- ════════════════════════ SCROLL TO TOP ════════════════════════ -->
+<a class="scroll-top" id="scrollTop" href="#">
+  <span class="arrow"></span>
+  <span class="label">TOP</span>
+</a>
+
+<!-- ════════════════════════ TOC ════════════════════════ -->
+<nav class="toc">
+  <a class="toc-item" href="#s0"><span class="toc-num">0</span><span class="toc-label">스킬이란?</span></a>
+  <a class="toc-item" href="#s1"><span class="toc-num">1</span><span class="toc-label">기존 스킬 찾아보기</span></a>
+  <a class="toc-item" href="#s2"><span class="toc-num">2</span><span class="toc-label">스킬 파일 구조 이해하기</span></a>
+  <a class="toc-item" href="#s3"><span class="toc-num">3</span><span class="toc-label">플랜 모드로 설계하기</span></a>
+  <a class="toc-item" href="#s4"><span class="toc-num">4</span><span class="toc-label">공식 모범 사례</span></a>
+  <a class="toc-item" href="#s5"><span class="toc-num">5</span><span class="toc-label">실전: 스킬 만들어보기</span></a>
+  <a class="toc-item" href="#ref"><span class="toc-num">+</span><span class="toc-label">참고 자료</span></a>
+</nav>
+
+<!-- ════════════════════════ CONTENT ════════════════════════ -->
+<main class="content">
+
+  <!-- ────── 0. 스킬이란? ────── -->
+  <article class="section" id="s0">
+    <div class="section-number">0</div>
+    <h2>스킬이란?</h2>
+
+    <p>
+      <strong>스킬(Skill)</strong>은 Claude Code에 등록하는 <strong>폴더</strong>입니다.
+      폴더 안에는 필수 파일인 <code>SKILL.md</code> 하나와,
+      필요에 따라 템플릿, 예시 파일, 스크립트 등 어떤 파일이든 함께 넣을 수 있습니다.
+      Claude는 이 폴더의 내용을 참고해서 작업을 수행합니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>용어: .md 파일 (마크다운)</strong><br>
+        스킬 파일의 확장자는 <code>.md</code>입니다.
+        마크다운(Markdown)은 텍스트에 간단한 서식을 넣을 수 있는 파일 형식으로,
+        메모장으로도 열어서 편집할 수 있습니다.
+      </p>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">스킬의 실행 방식</h3>
+
+    <p>스킬은 두 가지 방식으로 실행됩니다.</p>
+
+    <div class="diagram">
+      <div class="diagram-title">스킬 실행 방식</div>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 5.5rem; color: var(--accent); font-weight: 700;">수동 실행</div>
+          <div>
+            <div style="color: var(--text); font-size: 0.78rem;">
+              사용자가 <span style="color: var(--text-bright);">/스킬이름</span> 을 직접 입력해서 실행
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 5.5rem; color: var(--green); font-weight: 700;">자동 실행</div>
+          <div>
+            <div style="color: var(--text); font-size: 0.78rem;">
+              Claude가 스킬의 설명(description)을 보고, 현재 작업에 해당 스킬이 필요하다고 판단하면 스스로 로딩
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">CLAUDE.md와의 차이</h3>
+
+    <div class="diagram">
+      <div class="diagram-title">CLAUDE.md vs 스킬 — 로딩 방식 비교</div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 7rem; color: var(--blue); font-weight: 700;">CLAUDE.md</div>
+          <div style="color: var(--text); font-size: 0.78rem;">
+            대화가 시작될 때 <strong style="color: var(--text-bright);">항상 전체 내용</strong>이 로딩됨
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 7rem; color: var(--accent); font-weight: 700;">스킬</div>
+          <div style="color: var(--text); font-size: 0.78rem;">
+            평소에는 <strong style="color: var(--text-bright);">이름과 설명만</strong> 로딩됨. 실행될 때만 본문이 로딩됨
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      따라서 항상 적용되어야 하는 내용은 CLAUDE.md에,
+      특정 작업을 할 때만 필요한 내용은 스킬에 넣습니다.
+    </p>
+
+    <h3 style="margin-top: 2.5rem;">스킬의 3단계 로딩</h3>
+
+    <p>
+      스킬은 처음부터 전부 읽지 않습니다.
+      Claude가 한 번에 처리할 수 있는 텍스트 양에는 한계가 있으므로, <strong>필요한 만큼만 단계적으로</strong> 읽어옵니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">Progressive Disclosure — 3단계 로딩</div>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; font-family: var(--font-mono); font-size: 0.82rem;">
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 5.5rem; color: var(--green); font-weight: 700;">1단계</div>
+          <div>
+            <div style="color: var(--text-bright); margin-bottom: 0.3rem;">이름 + 설명만 읽기</div>
+            <div style="color: var(--text); font-size: 0.78rem;">
+              항상 로딩 · 스킬 1개당 약 100토큰
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 5.5rem; color: var(--blue); font-weight: 700;">2단계</div>
+          <div>
+            <div style="color: var(--text-bright); margin-bottom: 0.3rem;">SKILL.md 본문 읽기</div>
+            <div style="color: var(--text); font-size: 0.78rem;">
+              스킬이 실행될 때만 로딩 · 최대 5,000토큰 권장
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="min-width: 5.5rem; color: var(--accent); font-weight: 700;">3단계</div>
+          <div>
+            <div style="color: var(--text-bright); margin-bottom: 0.3rem;">첨부 파일 읽기</div>
+            <div style="color: var(--text); font-size: 0.78rem;">
+              필요할 때만 로딩 · 용량 제한 없음
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size: 0.85rem; color: var(--text);">
+      스킬을 100개 등록해도 1단계에서는 이름과 설명만 읽으므로 부담이 적습니다.
+      실제로 실행되는 스킬만 2단계, 3단계로 넘어갑니다.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 1. 기존 스킬 찾아보기 ────── -->
+  <article class="section" id="s1">
+    <div class="section-number">1</div>
+    <h2>기존 스킬 찾아보기</h2>
+
+    <p>
+      스킬을 직접 만들기 전에, <strong>이미 공개된 스킬</strong>이 없는지 먼저 찾아보세요.
+      완벽히 같은 스킬이 아니더라도, 비슷한 스킬을 찾아서 수정하는 것이 더 빠릅니다.
+    </p>
+
+    <h3 style="margin-top: 2rem;">스킬 모음</h3>
+
+    <div class="diagram">
+      <div class="diagram-title">스킬을 찾을 수 있는 곳</div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--font-mono); font-size: 0.8rem;">
+        <div>
+          <a href="https://skills.sh" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">skills.sh</a>
+          <span style="color: var(--text);"> — 스킬 디렉토리 사이트. 검색, 인기순 정렬</span>
+        </div>
+        <div>
+          <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">anthropics/skills</a>
+          <span style="color: var(--text);"> — Anthropic 공식. 스킬 표준 스펙 + 레퍼런스 스킬</span>
+        </div>
+        <div>
+          <a href="https://github.com/anthropics/claude-plugins-official" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">anthropics/claude-plugins-official</a>
+          <span style="color: var(--text);"> — Anthropic 공식 플러그인 저장소</span>
+        </div>
+        <div>
+          <a href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">awesome-claude-code</a>
+          <span style="color: var(--text);"> — 스킬, 훅, 플러그인 종합 목록</span>
+        </div>
+        <div>
+          <a href="https://github.com/VoltAgent/awesome-agent-skills" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">awesome-agent-skills</a>
+          <span style="color: var(--text);"> — 1,000+ 스킬. 여러 AI 도구에서 사용 가능</span>
+        </div>
+        <div>
+          <a href="https://github.com/sickn33/antigravity-awesome-skills" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">antigravity-awesome-skills</a>
+          <span style="color: var(--text);"> — 1,340+ 스킬 컬렉션</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2rem;">Claude에게 조사 시키기</h3>
+
+    <p>
+      위 사이트를 직접 돌아다니는 대신, Claude에게 조사를 시킬 수도 있습니다.
+    </p>
+
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);">~한 기능을 하는 스킬이 이미 있는지
+skills.sh, GitHub 등에서 조사해줘.</div>
+
+    <p style="font-size: 0.85rem; color: var(--text);">
+      Claude가 여러 사이트를 검색해서 비슷한 스킬을 찾고 비교해줍니다.
+    </p>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 2. 스킬 파일 구조 이해하기 ────── -->
+  <article class="section" id="s2">
+    <div class="section-number">2</div>
+    <h2>스킬 파일 구조 이해하기</h2>
+
+    <p>
+      스킬은 결국 <strong>폴더 안에 들어있는 텍스트 파일</strong>입니다.
+      핵심 파일은 <code>SKILL.md</code> 하나이고, 필요하면 보조 파일을 옆에 둡니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">스킬 디렉토리 구조</div>
+<div class="code-block" style="margin: 0; border: none; background: none; padding: 0;">
+.claude/skills/
+└── weekly-report/          <span style="color: var(--text-dim);">← 스킬 이름 = 폴더 이름</span>
+    ├── SKILL.md             <span style="color: var(--text-dim);">← 필수. 스킬의 본체</span>
+    ├── template.md          <span style="color: var(--text-dim);">← 선택. 보고서 양식 등</span>
+    └── examples/
+        └── sample.md        <span style="color: var(--text-dim);">← 선택. 예시 파일</span>
+</div>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">SKILL.md 파일의 구조</h3>
+
+    <p>
+      SKILL.md는 두 부분으로 나뉩니다: <strong>머리말(frontmatter)</strong>과 <strong>본문</strong>.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>용어: 머리말 (frontmatter)</strong><br>
+        파일 맨 위에 <code>---</code> 두 줄 사이에 적는 영역입니다.
+        스킬의 이름, 설명 같은 정보를 여기에 넣습니다.
+        그 아래가 본문으로, 실제 지침 내용을 자유롭게 작성합니다.
+      </p>
+    </div>
+
+    <p>
+    </p>
+
+    <div class="code-block" style="font-size: 0.82rem;">
+<span class="comment">--- (머리말 시작)</span>
+<span class="key">name</span>: <span class="str">weekly-report</span>
+<span class="key">description</span>: <span class="str">주간보고서를 작성합니다. 매주 금요일 보고서 작성 시 사용합니다.</span>
+<span class="comment">--- (머리말 끝)</span>
+
+<span class="accent"># 주간보고서 작성 스킬</span>
+
+<span class="comment">## 작업 절차</span>
+1. 이번 주 완료된 작업 목록을 정리합니다.
+2. 다음 주 계획을 작성합니다.
+3. template.md 양식에 맞춰 보고서를 생성합니다.
+
+<span class="comment">## 주의사항</span>
+- 수치 데이터는 반드시 출처를 명시합니다.
+- 보고서 길이는 A4 1장 이내로 유지합니다.
+</div>
+
+    <h3 style="margin-top: 2.5rem;">머리말(frontmatter) 주요 필드</h3>
+
+    <div class="diagram">
+      <div class="diagram-title">필수 vs 선택 필드</div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--font-mono); font-size: 0.8rem;">
+
+        <div>
+          <div style="color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;">필수</div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1rem;">
+            <div><span style="color: var(--blue);">name</span> <span style="color: var(--text);">— 스킬 이름. 영문 소문자, 숫자, 하이픈만 사용</span></div>
+            <div><span style="color: var(--blue);">description</span> <span style="color: var(--text);">— 이 스킬이 뭘 하는지 + 언제 쓰는지. Claude가 이걸 보고 자동 실행 여부를 판단</span></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="color: var(--green); font-weight: 700; margin-bottom: 0.5rem;">자주 쓰는 선택 필드</div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1rem;">
+            <div><span style="color: var(--blue);">allowed-tools</span> <span style="color: var(--text);">— 이 스킬이 사용할 수 있는 도구 목록 (Bash, Read, Write 등)</span></div>
+            <div><span style="color: var(--blue);">user-invocable</span> <span style="color: var(--text);">— false로 설정하면 사용자가 /이름으로 직접 실행 불가. Claude가 필요하다고 판단할 때만 자동 실행</span></div>
+            <div><span style="color: var(--blue);">argument-hint</span> <span style="color: var(--text);">— /이름 뒤에 뭘 입력해야 하는지 안내 문구 (예: [issue-number])</span></div>
+            <div><span style="color: var(--blue);">context</span> <span style="color: var(--text);">— fork로 설정하면 별도의 독립된 Claude 세션에서 실행 (메인 대화에 영향 없음)</span></div>
+            <div><span style="color: var(--blue);">model</span> <span style="color: var(--text);">— 이 스킬 실행 시 사용할 AI 모델 (예: claude-sonnet-4-6)</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">저장 위치</h3>
+
+    <p>
+      스킬을 어디에 저장하느냐에 따라 적용 범위가 달라집니다.
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">스킬 저장 위치와 적용 범위</div>
+      <div style="display: flex; flex-direction: column; gap: 1rem; font-family: var(--font-mono); font-size: 0.8rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="min-width: 10rem; color: var(--green);">~/.claude/skills/</div>
+          <div style="color: var(--text);">→ 내 모든 프로젝트에서 사용</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="min-width: 10rem; color: var(--blue);">.claude/skills/</div>
+          <div style="color: var(--text);">→ 이 프로젝트에서만 사용. 팀원과 공유 가능</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="min-width: 10rem; color: var(--purple);">플러그인 경유</div>
+          <div style="color: var(--text);">→ 플러그인 설치한 곳에서 사용</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>용어: ~ (틸드)</strong><br>
+        경로에서 <code>~</code>는 홈 폴더를 뜻합니다.
+        Windows에서는 <code>C:\Users\사용자이름</code> 에 해당합니다.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 3. 플랜 모드로 설계하기 ────── -->
+  <article class="section" id="s3">
+    <div class="section-number">3</div>
+    <h2>플랜 모드로 설계하기</h2>
+
+    <p>
+      스킬을 만들 때 가장 중요한 원칙:
+    </p>
+
+    <div class="callout" style="border-left-color: var(--accent);">
+      <p>
+        <strong>바로 구현하지 마세요. 계획부터 세우세요.</strong><br><br>
+        Claude에게 "~한 스킬 만들어줘"라고 바로 시키면
+        요구사항이 빠지거나 구조가 비효율적일 수 있습니다.
+        플랜 모드에서 계획을 먼저 세우고, 검토를 반복한 뒤, 구현을 시작하세요.
+      </p>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">워크플로우</h3>
+
+    <div class="diagram">
+      <div class="diagram-title">플랜 모드 → 구현 워크플로우</div>
+      <div class="agent-loop">
+
+        <div class="agent-step" style="background: rgba(232,123,53,0.12); border: 1px solid rgba(232,123,53,0.35); color: var(--accent); font-weight: 700;">
+          Step 1 — 참고 자료 전달 + 플랜 모드 진입
+        </div>
+        <div class="agent-arrow">↓</div>
+
+        <div class="loop-container">
+          <div class="agent-step" style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.3); color: var(--purple);">
+            Step 2 — 계획 수정 요청 (반복)
+          </div>
+          <div class="agent-arrow">↓</div>
+          <div class="agent-step" style="background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.3); color: var(--purple);">
+            Step 3 — 문제점 검토 요청 (반복)
+          </div>
+          <div class="loop-brace"></div>
+          <div class="loop-brace-label">반복</div>
+        </div>
+
+        <div class="agent-arrow">↓</div>
+        <div class="agent-step" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); color: var(--green); font-weight: 700;">
+          Step 4 — 구현 시작
+        </div>
+
+      </div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">단계별 설명</h3>
+
+    <p>
+      <strong>Step 1 — 참고 자료 전달 + 플랜 모드 진입</strong>
+    </p>
+    <p>
+      공식 모범 사례 문서와, 섹션 1에서 찾아둔 비슷한 기존 스킬의 링크를 함께 전달합니다.
+      그리고 플랜 모드로 계획을 세워달라고 요청합니다.
+    </p>
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);">이 공식 가이드를 참고해서 ~한 기능을 하는 스킬을 만들고 싶어.
+https://platform.claude.com/docs/ko/agents-and-tools/agent-skills/best-practices
+
+그리고 이 기존 스킬도 참고해:
+https://github.com/xxx/비슷한-스킬-링크
+
+플랜 모드로 계획부터 세워줘.</div>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>플랜 모드 진입 방법</strong><br>
+        — 위 예시처럼 자연어로 "플랜 모드로 해줘"라고 요청<br>
+        — <code>/plan</code> 슬래시 커맨드 입력<br>
+        — <span class="highlight">Shift + Tab</span> 단축키로 모드 전환<br><br>
+        어떤 방식이든 동일하게 플랜 모드로 진입합니다.
+        이 모드에서는 실제 파일을 생성하거나 수정하지 않고 계획만 세웁니다.
+      </p>
+    </div>
+
+    <p style="margin-top: 2rem;">
+      <strong>Step 2 — 계획 수정 요청 (반복)</strong>
+    </p>
+    <p>
+      Claude가 작성한 계획서를 읽어봅니다. 계획 아래에 선택지가 나타나는데,
+      <strong>선택지 3번</strong>에 수정 사항을 적고 Enter를 누릅니다.
+    </p>
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);"><span class="comment">(선택지 3번에 수정 요청 작성)</span>
+데이터 출처 부분이 빠져있어. 어디서 데이터를 가져올지도 계획에 포함해줘.</div>
+    <p style="font-size: 0.85rem; color: var(--text);">
+      한 번에 완벽한 계획이 나오는 경우는 드뭅니다. 수정을 반복하세요.
+    </p>
+
+    <p style="margin-top: 2rem;">
+      <strong>Step 3 — 문제점 검토 요청 (반복)</strong>
+    </p>
+    <p>
+      계획이 어느 정도 완성되었다고 느껴져도, 한 번 더 검증합니다.
+    </p>
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);"><span class="comment">(선택지 3번에 검토 요청 작성)</span>
+이 계획에서 예상되는 문제점을 파악하고, 혹시 추가로 빠진 부분은 없는지 검토해줘.</div>
+    <p style="font-size: 0.85rem; color: var(--text);">
+      이 단계에서 예외 상황, 에러 처리, 빠진 케이스 등이 발견됩니다.
+      괜찮다 싶을 때까지 Step 2, 3을 반복합니다.
+    </p>
+
+    <p style="margin-top: 2rem;">
+      <strong>Step 4 — 구현 시작</strong>
+    </p>
+    <p>
+      계획에 더 이상 문제가 없으면, <strong>선택지 1번</strong>을 선택합니다.
+      1번은 "Yes"로 시작하는 선택지로, 이걸 누르면 Claude가 계획대로 실제 파일을 생성합니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--green); background: rgba(74,222,128,0.08);">
+      <p>
+        <strong>왜 이렇게까지 해야 하나요?</strong><br><br>
+        Claude는 구현을 시작하면 빠르게 파일을 생성합니다.
+        잘못된 구조로 만들어진 뒤에 수정하려면 처음부터 다시 만드는 것과 비슷합니다.<br><br>
+        계획 단계에서 충분히 검토하면 구현 후 재작업을 줄일 수 있습니다.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 4. 공식 모범 사례 ────── -->
+  <article class="section" id="s4">
+    <div class="section-number">4</div>
+    <h2>공식 모범 사례</h2>
+
+    <p>
+      Anthropic 공식 문서에서 권장하는 핵심 원칙들을 요약합니다.
+      전문은 <a href="https://platform.claude.com/docs/ko/agents-and-tools/agent-skills/best-practices" target="_blank" rel="noopener" style="color: var(--accent);">공식 문서</a>에서 확인하세요.
+    </p>
+
+    <h3 style="margin-top: 2rem;">핵심 원칙 5가지</h3>
+
+    <div class="diagram">
+      <div class="diagram-title">Best Practices Summary</div>
+      <div style="display: flex; flex-direction: column; gap: 1.8rem; font-family: var(--font-mono); font-size: 0.82rem;">
+
+        <div>
+          <div style="color: var(--accent); font-weight: 700; margin-bottom: 0.4rem;">1. 간결하게 쓰세요</div>
+          <div style="color: var(--text); font-size: 0.78rem;">
+            일반적인 프로그래밍 지식은 Claude가 이미 알고 있습니다.<br>
+            Claude가 <strong>알 수 없는 것</strong>만 적으세요 — 내부 양식, 특정 절차, 도메인 고유 규칙.
+          </div>
+        </div>
+
+        <div>
+          <div style="color: var(--green); font-weight: 700; margin-bottom: 0.4rem;">2. 자유도를 조절하세요</div>
+          <div style="color: var(--text); font-size: 0.78rem;">
+            <strong>높은 자유도</strong> — "자연스러운 문체로 작성해" (여러 방법이 다 괜찮을 때)<br>
+            <strong>중간 자유도</strong> — 대략적인 순서와 구조를 제시 (선호하는 패턴이 있을 때)<br>
+            <strong>낮은 자유도</strong> — 정확한 스크립트와 명령어를 지정 (틀리면 안 되는 작업)
+          </div>
+        </div>
+
+        <div>
+          <div style="color: var(--blue); font-weight: 700; margin-bottom: 0.4rem;">3. 점진적 공개(Progressive Disclosure)</div>
+          <div style="color: var(--text); font-size: 0.78rem;">
+            SKILL.md에는 개요와 핵심 절차만 쓰세요.<br>
+            상세한 참고 자료, 템플릿, 예시는 별도 파일로 분리하고 필요할 때 읽게 합니다.
+          </div>
+        </div>
+
+        <div>
+          <div style="color: var(--purple); font-weight: 700; margin-bottom: 0.4rem;">4. 검증 루프를 넣으세요</div>
+          <div style="color: var(--text); font-size: 0.78rem;">
+            "작업 후 결과를 확인하고, 문제가 있으면 수정해"라는 단계를 포함하세요.<br>
+            검증 단계 하나가 출력 품질을 크게 올립니다.
+          </div>
+        </div>
+
+        <div>
+          <div style="color: var(--yellow); font-weight: 700; margin-bottom: 0.4rem;">5. 설명(description)을 잘 쓰세요</div>
+          <div style="color: var(--text); font-size: 0.78rem;">
+            Claude는 description을 보고 이 스킬을 자동 실행할지 결정합니다.<br>
+            "무엇을 하는지"와 "언제 사용하는지"를 반드시 함께 적어야 합니다.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">피해야 할 패턴</h3>
+
+    <p>
+      — 본문이 500줄 이상으로 길어지는 것 (별도 파일로 분리)<br>
+      — 참고 파일이 여러 단계로 중첩되는 것 (SKILL.md → a.md → b.md → c.md)<br>
+      — 시간에 따라 바뀌는 정보를 고정값으로 직접 적어두는 것 (API 버전, URL 등)<br>
+      — 설명이 너무 모호해서 Claude가 언제 써야 할지 모르는 것
+    </p>
+
+    <div class="callout" style="border-left-color: var(--blue); background: rgba(91,141,239,0.08);">
+      <p>
+        <strong>"스킬 만드는 스킬"이라는 개념</strong><br><br>
+        공식 문서를 Claude에게 주고 "이 가이드라인을 참고해서 ~한 스킬을 만들어줘"라고 하면,
+        Claude가 모범 사례를 지키면서 스킬을 작성합니다.<br><br>
+        즉, <strong>스킬 제작 자체를 Claude에게 시키되, 공식 문서를 반드시 함께 전달</strong>하는 것이 핵심입니다.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 5. 실전: 스킬 만들어보기 ────── -->
+  <article class="section" id="s5">
+    <div class="section-number">5</div>
+    <h2>실전: 스킬 만들어보기</h2>
+
+    <p>
+      지금까지 배운 내용을 합쳐서, 처음부터 끝까지 스킬을 하나 만들어 보겠습니다.
+      예시로 <strong>"회의록 정리 스킬"</strong>을 만들어 봅니다.
+    </p>
+
+    <h3 style="margin-top: 2rem;">시나리오</h3>
+    <p>
+      — 회의 후 메모나 녹취록을 Claude에게 주면<br>
+      — 정해진 양식으로 회의록을 정리하고<br>
+      — 액션 아이템을 추출해서 담당자별로 분류
+    </p>
+
+    <h3 style="margin-top: 2.5rem;">Step 1 — 기존 스킬 조사</h3>
+
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);">회의록을 정리해주는 스킬이 이미 있는지
+skills.sh, GitHub 등에서 조사해줘.</div>
+
+    <p style="font-size: 0.85rem; color: var(--text);">
+      비슷한 스킬이 있으면 링크를 확보해둡니다.
+    </p>
+
+    <h3 style="margin-top: 2.5rem;">Step 2 — 참고 자료 전달 + 플랜 모드 진입</h3>
+
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);">이 공식 가이드를 참고해서 회의록 정리 스킬을 만들고 싶어.
+https://platform.claude.com/docs/ko/agents-and-tools/agent-skills/best-practices
+
+이 기존 스킬도 참고해:
+https://github.com/xxx/비슷한-스킬-링크
+
+요구사항:
+- 회의 메모를 받아서 양식에 맞게 정리
+- 액션 아이템을 담당자별로 분류
+- 양식은 template.md에 저장
+
+플랜 모드로 계획부터 세워줘.</div>
+
+    <h3 style="margin-top: 2.5rem;">Step 3 — 계획 검토 반복</h3>
+
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);"><span class="comment">(수정 요청)</span>
+회의 참석자 목록도 자동으로 추출하게 해줘.
+날짜와 회의 제목도 메모에서 찾아서 넣어줘.
+
+<span class="comment">(검토 요청)</span>
+이 계획에서 예상되는 문제점을 파악하고,
+혹시 빠진 부분은 없는지 검토해줘.
+
+<span class="comment">(문제없을 때까지 반복)</span></div>
+
+    <h3 style="margin-top: 2.5rem;">Step 4 — 구현</h3>
+
+    <p>
+      계획에 문제가 없으면 <strong>선택지 1번(Yes)</strong>을 눌러 구현을 시작합니다.
+      Claude가 아래와 같은 파일들을 생성합니다:
+    </p>
+
+    <div class="diagram">
+      <div class="diagram-title">생성되는 파일 구조</div>
+<div class="code-block" style="margin: 0; border: none; background: none; padding: 0;">
+.claude/skills/
+└── meeting-notes/
+    ├── SKILL.md              <span style="color: var(--text-dim);">← 핵심 지침</span>
+    └── template.md           <span style="color: var(--text-dim);">← 회의록 양식</span>
+</div>
+    </div>
+
+    <h3 style="margin-top: 2.5rem;">완성된 스킬 사용법</h3>
+
+    <div class="code-block" style="font-size: 0.85rem; color: var(--text);"><span class="comment">(Claude Code에서 이렇게 사용)</span>
+/meeting-notes
+
+오늘 회의 내용:
+- 김 대리가 API 연동 완료했다고 함
+- 박 과장이 다음주까지 디자인 시안 준비하기로
+- QA 일정은 4월 셋째주로 확정
+- 서버 비용 절감 방안 논의, 이 부분은 추가 조사 필요</div>
+
+    <p>
+      이렇게 입력하면 Claude가 스킬의 양식과 규칙에 따라
+      깔끔한 회의록을 자동으로 생성합니다.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--green); background: rgba(74,222,128,0.08);">
+      <p>
+        <strong>스킬은 수정 가능합니다.</strong><br><br>
+        사용 후 결과가 기대와 다르면 SKILL.md나 template.md를 수정하면 됩니다.
+        "이 스킬에서 ~부분을 수정해줘"라고 Claude에게 요청하면 해당 파일을 편집합니다.
+      </p>
+    </div>
+  </article>
+
+  <div class="section-divider"></div>
+
+  <!-- ────── 참고 자료 ────── -->
+  <article class="section" id="ref">
+    <div class="section-number">+</div>
+    <h2>참고 자료</h2>
+
+    <p>
+      — <a href="https://platform.claude.com/docs/ko/agents-and-tools/agent-skills/best-practices" target="_blank" rel="noopener" style="color: var(--accent);">스킬 모범 사례 (한국어)</a> — 스킬 제작 시 반드시 Claude에게 전달<br>
+      — <a href="https://platform.claude.com/docs/ko/agents-and-tools/agent-skills/overview" target="_blank" rel="noopener" style="color: var(--accent);">스킬 개요 (한국어)</a> — 아키텍처, 로딩 메커니즘 상세<br>
+      — <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener" style="color: var(--accent);">Claude Code 스킬 문서 (영문)</a> — Claude Code 전용 기능, 프론트매터 필드, 플러그인 등
+    </p>
+  </article>
+
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 2rem 4rem;">
+    <a href="../" style="color: var(--accent); font-family: var(--font-mono); font-size: 0.85rem;">&larr; 메인으로 돌아가기</a>
+  </div>
+
+</main>
+
+<!-- ════════════════════════ Scroll reveal ════════════════════════ -->
+<script src="../assets/js/main.js"></script>
+
+</body>
+</html>
